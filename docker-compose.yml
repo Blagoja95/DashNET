@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+
+# TODO: spring build and hot reload
+#  spring-be:
+#    container_name: dashNet-tomcat-fe
+#    build:
+#      context: .
+#      dockerfile: Spring.Dockerfile
+#    restart: always
+#    deploy:
+#      mode: replicated
+#      replicas: 1
+#    ports:
+#      - 8080:8080
+#    volumes:
+#      - .:/app
+#    networks:
+#      - dash-net
+
+  nodejs-fe:
+    container_name: dashNet-react-fe
+    build:
+      context: .
+      dockerfile: React.Dockerfile
+    image: dashnet-react-image
+    networks:
+      - dash-net
+    ports:
+      - 3000:3000
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - type: bind
+        source: ./src/main/ui
+        target: /app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  mysql-db:
+    build:
+      context: .
+      dockerfile: MySql.Dockerfile
+    container_name: dashNet-mysql
+    image: dashnet-mysql-image
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_PASSWORD: "thispasswordisnotsafe"
+      MYSQL_ROOT_PASSWORD: "thispasswordisnotsafe"
+      MYSQL_DATABASE: "dashnetdb"
+    volumes:
+      - "dashnet-mysql:/var/lib/mysql"
+    networks:
+      - dash-net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: php_my_admin
+    links:
+      - mysql-db
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    ports:
+      - 8081:80
+    networks:
+      - dash-net
+
+networks:
+  dash-net: { }
+
+volumes:
+  dashnet-mysql:
