@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import Card from "../ui/Card"
+import Card from "../../ui/card/Card"
 import { useEffect } from "react";
-import { resetInitialised, uiActions } from "../../store/slices/uiSlice";
+import { resetInitialised, uiActions } from "../../../store/slices/uiSlice";
 
 const Home = () => {
 	const dispatch = useDispatch();
