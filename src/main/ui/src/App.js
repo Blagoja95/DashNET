@@ -1,9 +1,14 @@
-import * as React from 'react';
-import {Button} from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import Navigation from './components/layout/Navigation';
+import Home from './components/pages/Home';
 const App = () => {
-	return <>
-		<Button >Hello</Button>
-		<Button color='success' onClick={() => alert('HI')}>Success</Button>
+	return (
+		<>
+		<Navigation />
+		<Routes>
+			<Route path='/' element={<Home />} />
+		</Routes>
 		</>
+	)
 }
 export default App
