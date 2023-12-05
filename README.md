@@ -4,9 +4,7 @@ WELCOME
 
 ## IDEAS
 
-[Dribble](https://dribbble.com/tags/user-dashboard)
- 
-(add [Figma link]())
+[Figma UI Design](https://www.figma.com/file/5gYGYXs1BT93FdimScGZBo/DashNET?type=design&node-id=0%3A1&mode=design&t=Qkd4mO0Bza1LK9kD-1)
 
 ## Getting Started
 
