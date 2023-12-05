@@ -1,0 +1,16 @@
+src/main/ui/node_modules
+src/main/ui/build
+
+.dockerignore
+Dockerfile
+React.DockerfileDockerfile
+Spring.Dockerfile
+MySql.Dockerfile
+Dockerfile.prod
+
+src/test
+
+README.md
+.gitignore
+.github
+.idea
