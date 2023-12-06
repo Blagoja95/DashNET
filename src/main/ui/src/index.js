@@ -6,16 +6,45 @@ import store from './store/store';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import { createTheme } from '@mui/material/styles';
+
 
 import App from './App';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
 
 const root = createRoot(document.getElementById('root'));
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: '#36BCBA',
+			contrastText: '#FFFFFF'
+		},
+		gray: {
+			main: '#252A31',
+			dark: '#1A1F1F'
+		},
+		dark: {
+			main: '#000000'
+		},
+		white: {
+			main: '#BBBFC8',
+			light: '#FFFFFF'
+		}
+
+	}
+})
 
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<Provider store={store}>
-				<App />
+				<CssBaseline>
+					<ThemeProvider theme={theme}>
+						<App />
+					</ThemeProvider>
+				</CssBaseline>
 			</Provider>
 		</BrowserRouter>
 	</React.StrictMode>
