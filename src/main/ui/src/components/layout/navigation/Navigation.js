@@ -50,10 +50,10 @@ const Navigation = () => {
 					<Box
 						onClick={() => setIsFull(el => !el)}
 						component='span'
-						ml='0.5rem'
 						sx={{
 							borderRadius: '5px',
 							cursor: 'pointer',
+							p: '0.5rem',
 							'&:hover': { bgcolor: 'gray.main' }
 						}}
 					>
