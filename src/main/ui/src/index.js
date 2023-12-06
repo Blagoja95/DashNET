@@ -16,6 +16,9 @@ import { CssBaseline } from '@mui/material';
 const root = createRoot(document.getElementById('root'));
 
 const theme = createTheme({
+	typography: {
+		fontFamily: 'Inter, sans-serif',
+	},
 	palette: {
 		primary: {
 			main: '#36BCBA',
@@ -32,17 +35,16 @@ const theme = createTheme({
 			main: '#BBBFC8',
 			light: '#FFFFFF'
 		}
-
 	}
 })
 
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<Provider store={store}>
+			<Provider store={ store }>
 				<CssBaseline>
-					<ThemeProvider theme={theme}>
-						<App />
+					<ThemeProvider theme={ theme }>
+						<App/>
 					</ThemeProvider>
 				</CssBaseline>
 			</Provider>
