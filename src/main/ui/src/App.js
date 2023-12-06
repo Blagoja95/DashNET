@@ -6,13 +6,8 @@ import Home from './components/pages/home/Home';
 const App = () =>
 {
 	return (
-		<Box sx={ {
-			display: 'flex'
-		} }>
-			<Box sx={ { bgcolor: 'gray.dark', width: '20%', height: '100vh', p: 2 } }>
-				<Navigation/>
-			</Box>
-
+		<Box display='flex'>
+			<Navigation/>
 			<Box sx={ {
 				bgcolor: 'black.main',
 				color: 'white.main',

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { resetInitialised, uiActions } from '../../../store/slices/uiSlice';
-import Card from '../../ui/card/Card';
 import Header from '../../layout/header/Header';
 
 const Home = () =>
