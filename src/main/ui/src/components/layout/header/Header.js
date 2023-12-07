@@ -24,6 +24,7 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 	}, [isFocused]);
 
 	return <Box
+		component={ 'header' }
 		sx={{
 			p: '1rem',
 			display: 'flex',

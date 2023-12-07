@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { resetInitialised, uiActions } from '../../../store/slices/uiSlice';
 import Header from '../../layout/header/Header';
-import { Box } from '@mui/material';
+import Grid from "../../ui/grid/Grid";
+import { Box, Chip } from "@mui/material";
 import TeamCard from './TeamCard';
 import InfoCard from './InfoCard';
 
