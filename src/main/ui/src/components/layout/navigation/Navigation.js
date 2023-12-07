@@ -1,8 +1,10 @@
-import { Box, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, Drawer, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Home, AssignmentTurnedIn, Dashboard, BarChart, Group, Settings, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useTheme } from "@emotion/react";
+
+import logo from '../../../assets/DashNET.svg';
 
 const Navigation = () => {
 	const { pathname } = useLocation();
@@ -44,10 +46,7 @@ const Navigation = () => {
 				px: '1rem'
 			}}>
 				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: '5rem' }}>
-					<Typography variant='h5' sx={{ textAlign: 'center', px: '5rem', color: 'white.main', display: isFull ? 'block' : 'none', flex: 1 }}>
-						Dash
-						<Box component='span' sx={{ fontWeight: 'bold', color: 'primary.main' }}>NET</Box>
-					</Typography>
+					<Box component='img' src={logo} sx={{display: isFull ? 'inline' : 'none', mx: 'auto', width: 100}} />
 					<Box
 						onClick={() => setIsFull(el => !el)}
 						component='span'
