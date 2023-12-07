@@ -18,9 +18,10 @@ const Navigation = () => {
 		{ text: 'Users', icon: Group, to: '/users' },
 		{ text: 'Settings', icon: Settings, to: '/settings' }
 	];
+
 	return (
 		<Drawer
-			variant="permanent"
+			variant='permanent'
 			sx={{
 				'& .MuiPaper-root':
 				{
@@ -42,10 +43,10 @@ const Navigation = () => {
 				pt: '2rem',
 				px: '1rem'
 			}}>
-				<Box component='div' display='flex' alignItems='center' justifyContent='center' mb='5rem'>
-					<Typography variant="h5" textAlign='center' px="5rem" color='white.main' display={isFull ? 'block' : 'none'} flex={1}>
+				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: '5rem' }}>
+					<Typography variant='h5' sx={{ textAlign: 'center', px: '5rem', color: 'white.main', display: isFull ? 'block' : 'none', flex: 1 }}>
 						Dash
-						<Box component='span' fontWeight='bold' color='primary.main'>NET</Box>
+						<Box component='span' sx={{ fontWeight: 'bold', color: 'primary.main' }}>NET</Box>
 					</Typography>
 					<Box
 						onClick={() => setIsFull(el => !el)}
@@ -57,7 +58,7 @@ const Navigation = () => {
 							'&:hover': { bgcolor: 'gray.main' }
 						}}
 					>
-						{isFull ? <ChevronLeft color="white" style={{ fontSize: '3rem' }} /> : <ChevronRight color="white" style={{ fontSize: '3rem' }} />}
+						{isFull ? <ChevronLeft sx={{ fontSize: '3rem', color: 'white.main' }} /> : <ChevronRight sx={{ fontSize: '3rem', color: 'white.main' }} />}
 					</Box>
 				</Box>
 				{
@@ -72,11 +73,10 @@ const Navigation = () => {
 								'&:hover': { bgcolor: 'gray.main' },
 								'&:hover *': { color: 'primary.main' }
 							}}>
-							<ListItemIcon><el.icon color={el.to === pathname ? 'primary' : 'white'} sx={{ fontSize: '2rem' }} /></ListItemIcon>
-							{isFull && <ListItemText primary={el.text} primaryTypographyProps={{
-								color: el.to === pathname ? 'primary.main' : 'white.main', fontSize: '1.5rem',
-
-							}} />}
+							<ListItemIcon>
+								<el.icon sx={{ fontSize: '2rem', color: el.to === pathname ? 'primary.main' : 'white.main' }} />
+							</ListItemIcon>
+							{isFull && <ListItemText primary={el.text} primaryTypographyProps={{ color: el.to === pathname ? 'primary.main' : 'white.main', fontSize: '1.5rem' }} />}
 						</ListItemButton>
 					)}
 			</List>
