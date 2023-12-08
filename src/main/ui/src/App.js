@@ -9,8 +9,6 @@ const App = () =>
 		<Box display='flex'>
 			<Navigation/>
 			<Box sx={ {
-				bgcolor: 'black.main',
-				color: 'white.main',
 				width: '100%',
 				p: '2rem 4rem 1rem 4rem'
 			} }>
@@ -22,6 +20,6 @@ const App = () =>
 			</Box>
 		</Box>
 	);
-}
+};
 
 export default App;
