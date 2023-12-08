@@ -9,16 +9,11 @@ import InfoCard from './InfoCard';
 const Home = () => {
 	const dispatch = useDispatch();
 
-	const isInitialised = useSelector(state => state.ui.initialised);
-
-	useEffect(() => {
+	useEffect(() =>
+	{
 		dispatch(uiActions.setInitialised(true));
 		dispatch(resetInitialised());
 	}, [dispatch]);
-
-	useEffect(() => {
-		console.log(isInitialised);
-	}, [isInitialised]);
 
 	return (
 		<>

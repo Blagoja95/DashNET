@@ -27,8 +27,7 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 		sx={{
 			p: '1rem',
 			display: 'flex',
-			flexDirection: 'column',
-			bgcolor: 'transparent'
+			flexDirection: 'column'
 		}}>
 
 		<Box
@@ -39,7 +38,6 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 
 			<Typography variant='h3'
 						sx={{
-							color: 'white.light',
 							fontWeight: 'bold'
 						}}>
 
@@ -56,9 +54,6 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 				<TextField
 					inputRef={inputRef}
 					sx={{
-						'& input': {
-							color: 'white.main'
-						},
 						width: inputWidth,
 						transition: 'width 0.3s ease-in-out',
 						display: `${hideSearchBar ? 'none' : 'block'}`
@@ -68,7 +63,6 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 							<InputAdornment position='start'>
 								<SearchIcon
 									sx={{
-										color: 'white.main',
 										cursor: 'pointer'
 									}}/>
 							</InputAdornment>
@@ -89,6 +83,7 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 			<Typography variant='subtitle1'
 						sx={{
 							display: `${(subtitleTxt && subtitleTxt?.length > 0) ? 'block' : 'none'}`,
+							color: 'white.main',
 							marginTop: '1rem'
 						}}>
 
