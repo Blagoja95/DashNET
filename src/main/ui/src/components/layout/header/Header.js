@@ -83,6 +83,7 @@ const Header = ({titleTxt, subtitleTxt, hideSearchBar = false}) =>
 			<Typography variant='subtitle1'
 						sx={{
 							display: `${(subtitleTxt && subtitleTxt?.length > 0) ? 'block' : 'none'}`,
+							color: 'white.main',
 							marginTop: '1rem'
 						}}>
 

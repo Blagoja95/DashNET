@@ -7,6 +7,7 @@ import store from './store/store';
 import { BrowserRouter } from 'react-router-dom';
 
 import { createTheme } from '@mui/material/styles';
+import darkTheme from './theme/dark/dark'
 
 
 import App from './App';
@@ -15,29 +16,7 @@ import { CssBaseline } from '@mui/material';
 
 const root = createRoot(document.getElementById('root'));
 
-const themeDark = createTheme({
-	typography: {
-		fontFamily: 'Inter, sans-serif',
-	},
-	palette: {
-		mode: 'dark',
-		primary: {
-			main: '#36BCBA',
-			contrastText: '#FFFFFF'
-		},
-		gray: {
-			main: '#252A31',
-			dark: '#1A1F1F'
-		},
-		black: {
-			main: '#000000'
-		},
-		white: {
-			main: '#BBBFC8',
-			light: '#FFFFFF'
-		}
-	}
-});
+const themeDark = createTheme(darkTheme);
 
 root.render(
 	<React.StrictMode>
