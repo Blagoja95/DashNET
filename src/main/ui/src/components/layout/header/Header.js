@@ -1,30 +1,22 @@
 import { useState, useRef, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Avatar, Typography, InputAdornment, TextField } from '@mui/material';
+import { Box, Avatar, Typography, InputAdornment, TextField, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
+import { SearchDialog } from '../../../App';
 
 const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
 {
 	const [ isFocused, setFocused ] = useState(false);
 	const inputRef = useRef(null);
 
-	const inputWidth = isFocused ? 300 : 30;
-
-	useEffect(() =>
+	const handleKeyEvent = (e) =>
 	{
-		if (isFocused && inputRef.current)
-		{
-			inputRef.current.focus();
-		}
-		else
-		{
-			inputRef.current.blur();
-		}
+		e.preventDefault();
 
-	}, [ isFocused ]);
+		console.log(e);
+	};
 
 	return <Box
-		component={ 'header' }
 		sx={ {
 			p: '1rem',
 			display: 'flex',
@@ -51,28 +43,14 @@ const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
 					alignItems: 'center',
 					gap: 4
 				} }>
-
-				<TextField
-					inputRef={ inputRef }
-					sx={ {
-						width: inputWidth,
-						transition: 'width 0.3s ease-in-out',
-						display: `${ hideSearchBar ? 'none' : 'block' }`
-					} }
-					InputProps={ {
-						startAdornment: (
-							<InputAdornment position='start'>
-								<SearchIcon
-									sx={ {
-										cursor: 'pointer'
-									} }/>
-							</InputAdornment>
-						),
-					} }
-					variant='standard'
-					onClick={ () => setFocused(!isFocused) }
-					onBlur={ () => setFocused(false) }
-				/>
+				<Button
+					onClick={ () => setOpen(true) }>
+					<SearchIcon
+						color={ 'primary' }
+						sx={ {
+							cursor: 'pointer'
+						} }/>
+				</Button>
 
 				<Box
 					sx={ {
