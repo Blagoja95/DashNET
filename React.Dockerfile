@@ -1,16 +1,16 @@
-FROM node:latest
+FROM node:21.0.0-alpine
 
 LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-ENV PATH /app/node_modules/.bin:$PATH
+RUN --mount=type=bind,source=./src/main/ui/package.json,target=package.json \
+    --mount=type=bind,source=./src/main/ui/package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --include=dev \
 
-COPY src/main/ui/package.json ./
-COPY src/main/ui/package-lock.json ./
+USER node
 
-RUN npm install nodemon --save-dev
+COPY ./src/main/ui/ .
 
-COPY src/main/ui ./
-
-CMD ["nodemon", "--exec", "npm", "start"]
+CMD npm run start

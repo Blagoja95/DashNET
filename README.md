@@ -14,6 +14,8 @@ To start `(sudo DOCKER_BUILDKIT=0) docker-compose up -d --build`
 
 To stop `(sudo) docker-compose down`
 
+Tomcat hot reload workaround => `docker compose restart spring-be`
+
 ## API documentation
 
 Create [Swagger](https://swagger.io/)
