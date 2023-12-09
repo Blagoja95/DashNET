@@ -2,22 +2,21 @@ version: '3'
 
 services:
 
-# TODO: spring build and hot reload
-#  spring-be:
-#    container_name: dashNet-tomcat-fe
-#    build:
-#      context: .
-#      dockerfile: Spring.Dockerfile
-#    restart: always
-#    deploy:
-#      mode: replicated
-#      replicas: 1
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - .:/app
-#    networks:
-#      - dash-net
+  spring-be:
+    container_name: dashNet-tomcat-fe
+    build:
+      context: .
+      dockerfile: Spring.Dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    networks:
+      - dash-net
 
   nodejs-fe:
     container_name: dashNet-react-fe
@@ -34,12 +33,7 @@ services:
       mode: replicated
       replicas: 1
     volumes:
-      - type: bind
-        source: ./src/main/ui
-        target: /app
-      - /app/node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - ./src/main/ui/:/usr/src/app/
 
   mysql-db:
     build:

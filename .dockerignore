@@ -3,14 +3,18 @@ src/main/ui/build
 
 .dockerignore
 Dockerfile
-React.DockerfileDockerfile
+React.Dockerfile
 Spring.Dockerfile
 MySql.Dockerfile
 Dockerfile.prod
+docker-compose.yml
 
 src/test
 
+target
+
 README.md
+.editorconfig
 .gitignore
 .github
 .idea
