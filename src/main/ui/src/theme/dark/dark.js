@@ -8,7 +8,10 @@ export default {
 			main: '#36BCBA',
 			contrastText: '#FFFFFF'
 		},
-		gray: {
+		secondary: {
+			main: '#95B1AF'
+		},
+		grey: {
 			main: '#252A31',
 			dark: '#1A1F1F'
 		},

@@ -44,7 +44,9 @@ const Navigation = () => {
 			<List sx={{
 				pt: '2rem',
 				px: '1rem'
-			}}>
+			}}
+				  component={ 'nav' }>
+
 				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: '5rem' }}>
 					<Box component='img' src={logo} sx={{display: isFull ? 'inline' : 'none', mx: 'auto', width: 100}} />
 					<Box
