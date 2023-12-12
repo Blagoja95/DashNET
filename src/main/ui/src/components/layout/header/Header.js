@@ -1,20 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import { useContext } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Avatar, Typography, InputAdornment, TextField, Button } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
-import { SearchDialog } from '../../../App';
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../store/slices/uiSlice";
 
-const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
+const Header = ({ titleTxt, subtitleTxt }) =>
 {
-	const [ isFocused, setFocused ] = useState(false);
-	const inputRef = useRef(null);
-
-	const handleKeyEvent = (e) =>
-	{
-		e.preventDefault();
-
-		console.log(e);
-	};
+	const dispatch = useDispatch();
 
 	return <Box
 		sx={ {
@@ -44,7 +37,7 @@ const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
 					gap: 4
 				} }>
 				<Button
-					onClick={ () => setOpen(true) }>
+					onClick={ () =>  dispatch(uiActions.setSearchOpen(true))}>
 					<SearchIcon
 						color={ 'primary' }
 						sx={ {

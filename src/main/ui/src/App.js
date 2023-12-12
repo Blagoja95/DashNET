@@ -1,15 +1,16 @@
 import { Box } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
-import { createContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navigation from './components/layout/navigation/Navigation';
 import Home from './components/pages/home/Home';
 import Search from './components/layout/search/Search'
+import { useDispatch } from "react-redux";
+import { uiActions } from "./store/slices/uiSlice";
 
-export const SearchDialog = createContext();
 
 const App = () =>
 	{
-		let [ open, setOpen ] = useState(false);
+		const dispatch = useDispatch();
 
 		useEffect(() =>
 		{
@@ -17,7 +18,7 @@ const App = () =>
 			{
 				if (e.ctrlKey && e.key === '/')
 				{
-					setOpen(true);
+					dispatch(uiActions.setSearchOpen(true));
 				}
 			};
 
@@ -34,14 +35,12 @@ const App = () =>
 					p: '2rem 4rem 1rem 4rem'
 				} }>
 
-					<SearchDialog.Provider value={ { open, setOpen } }>
 						<Search/>
 
 						<Routes>
 							<Route path='/' element={ <Home/> }/>
 							<Route path='*' element={ <section>404 TODO</section> }/>
 						</Routes>
-					</SearchDialog.Provider>
 				</Box>
 			</Box>
 		);
