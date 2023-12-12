@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
-import { useDispatch } from "react-redux";
-import { uiActions } from "../../../store/slices/uiSlice";
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../../store/slices/uiSlice';
 
 const Header = ({ titleTxt, subtitleTxt }) =>
 {

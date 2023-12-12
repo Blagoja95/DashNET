@@ -1,4 +1,4 @@
-export default {
+const themeDark = {
 	typography: {
 		fontFamily: 'Inter, sans-serif',
 	},
@@ -23,4 +23,6 @@ export default {
 			light: '#FFFFFF'
 		}
 	}
-}
+};
+
+export default themeDark;

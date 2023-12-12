@@ -24,7 +24,8 @@ const DebounceInput = ({ handleDebounce, debounceTimeout = 500, label = 'Search 
 	return <TextField fullWidth
 					  label={ label }
 					  autoFocus={ true }
-					  onChange={ handleChange }/>;
+					  onChange={ handleChange }
+					  className={'search-bar'}/>;
 };
 
 export default DebounceInput;
