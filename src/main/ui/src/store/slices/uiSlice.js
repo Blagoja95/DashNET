@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	initialised: true
+	initialised: true,
+	searchOpen: false
 }
 
 const uiSlice = createSlice({
@@ -10,6 +11,9 @@ const uiSlice = createSlice({
 	reducers: {
 		setInitialised(state, action) {
 			state.initialised = action.payload;
+		},
+		setSearchOpen(state, action) {
+			state.searchOpen = action.payload;
 		}
 	}
 })

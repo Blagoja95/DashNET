@@ -1,30 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Avatar, Typography, InputAdornment, TextField } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../../store/slices/uiSlice';
 
-const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
+const Header = ({ titleTxt, subtitleTxt }) =>
 {
-	const [ isFocused, setFocused ] = useState(false);
-	const inputRef = useRef(null);
-
-	const inputWidth = isFocused ? 300 : 30;
-
-	useEffect(() =>
-	{
-		if (isFocused && inputRef.current)
-		{
-			inputRef.current.focus();
-		}
-		else
-		{
-			inputRef.current.blur();
-		}
-
-	}, [ isFocused ]);
+	const dispatch = useDispatch();
 
 	return <Box
-		component={ 'header' }
 		sx={ {
 			p: '1rem',
 			display: 'flex',
@@ -51,28 +35,14 @@ const Header = ({ titleTxt, subtitleTxt, hideSearchBar = false }) =>
 					alignItems: 'center',
 					gap: 4
 				} }>
-
-				<TextField
-					inputRef={ inputRef }
-					sx={ {
-						width: inputWidth,
-						transition: 'width 0.3s ease-in-out',
-						display: `${ hideSearchBar ? 'none' : 'block' }`
-					} }
-					InputProps={ {
-						startAdornment: (
-							<InputAdornment position='start'>
-								<SearchIcon
-									sx={ {
-										cursor: 'pointer'
-									} }/>
-							</InputAdornment>
-						),
-					} }
-					variant='standard'
-					onClick={ () => setFocused(!isFocused) }
-					onBlur={ () => setFocused(false) }
-				/>
+				<Button
+					onClick={ () =>  dispatch(uiActions.setSearchOpen(true))}>
+					<SearchIcon
+						color={ 'primary' }
+						sx={ {
+							cursor: 'pointer'
+						} }/>
+				</Button>
 
 				<Box
 					sx={ {
