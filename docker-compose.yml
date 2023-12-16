@@ -3,7 +3,11 @@ version: '3'
 services:
 
   spring-be:
-    container_name: dashNet-tomcat-fe
+    container_name: dashNet-spring
+    profiles:
+      - 'spring'
+      - 'no-admin'
+      - 'spring-mysql'
     build:
       context: .
       dockerfile: Spring.Dockerfile
@@ -20,6 +24,9 @@ services:
 
   nodejs-fe:
     container_name: dashNet-react-fe
+    profiles:
+      - 'react'
+      - 'no-admin'
     build:
       context: .
       dockerfile: React.Dockerfile
@@ -40,6 +47,11 @@ services:
       context: .
       dockerfile: MySql.Dockerfile
     container_name: dashNet-mysql
+    profiles:
+      - 'mysql'
+      - 'no-admin'
+      - 'spring-mysql'
+      - 'admin-mysql'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -62,6 +74,9 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: php_my_admin
+    profiles:
+      - 'phpadmin'
+      - 'admin-mysql'
     links:
       - mysql-db
     environment:

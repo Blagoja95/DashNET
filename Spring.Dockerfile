@@ -1,14 +1,27 @@
-FROM eclipse-temurin:17-jdk-jammy
+# syntax=docker/dockerfile:experimental
+FROM eclipse-temurin:17-jdk-alpine as build
 
 LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
-WORKDIR /app
+WORKDIR /workspace/app
 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src/main/java ./src
+COPY src/main/resources ./src
 
-RUN ./mvnw dependency:resolve
+RUN --mount=type=cache,target=/root/.m2 ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-COPY src ./src
+FROM eclipse-temurin:17-jdk-alpine
 
-CMD ["./mvnw", "spring-boot:run"]
+VOLUME /tmp
+
+ARG DEPENDENCY=/workspace/app/target/dependency
+
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENTRYPOINT ["java","-cp","app:app/lib/*","hello.Application"]
