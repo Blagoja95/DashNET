@@ -1,4 +1,4 @@
-package com.dashnet.dashNet.Tasks;
+package com.dashnet.dashNet.Task;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +19,7 @@ public class Task
 	private int status;
 	private Date createdDate;
 	private Date deadlineDate;
-	private String Title;
+	private String title;
 	private String description;
 
 	public Long getId()
@@ -104,12 +104,12 @@ public class Task
 
 	public String getTitle()
 	{
-		return Title;
+		return this.title;
 	}
 
 	public void setTitle(String title)
 	{
-		Title = title;
+		this.title = title;
 	}
 
 	public String getDescription()
@@ -133,13 +133,13 @@ public class Task
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Task task = (Task) o;
-		return status == task.status && Objects.equals(id, task.id) && Objects.equals(creatorId, task.creatorId) && Objects.equals(assagneId, task.assagneId) && Objects.equals(teamId, task.teamId) && Objects.equals(commentTbId, task.commentTbId) && Objects.equals(createdDate, task.createdDate) && Objects.equals(deadlineDate, task.deadlineDate) && Objects.equals(Title, task.Title) && Objects.equals(description, task.description);
+		return status == task.status && Objects.equals(id, task.id) && Objects.equals(creatorId, task.creatorId) && Objects.equals(assagneId, task.assagneId) && Objects.equals(teamId, task.teamId) && Objects.equals(commentTbId, task.commentTbId) && Objects.equals(createdDate, task.createdDate) && Objects.equals(deadlineDate, task.deadlineDate) && Objects.equals(title, task.title) && Objects.equals(description, task.description);
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, creatorId, assagneId, teamId, commentTbId, status, createdDate, deadlineDate, Title, description);
+		return Objects.hash(id, creatorId, assagneId, teamId, commentTbId, status, createdDate, deadlineDate, title, description);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class Task
 			", status=" + status +
 			", createdDate=" + createdDate +
 			", deadlineDate=" + deadlineDate +
-			", Title='" + Title + '\'' +
+			", title='" + title + '\'' +
 			", description='" + description + '\'' +
 			'}';
 	}

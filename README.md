@@ -57,6 +57,17 @@ docker compose --profile spring restart
 docker compose restart spring-be
 ```
 
+### Access to MySQL container
+
+In CLI:
+
+```bash
+docker exec -it dashNet-mysql mysql -u <USERNAME> -p
+```
+
+Change < USERNAME > to existing user role.
+After command is executed you'll be prompted to enter password.
+
 ## API documentation
 
 Create [Swagger](https://swagger.io/)
