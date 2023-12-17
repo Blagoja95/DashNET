@@ -8,6 +8,7 @@ services:
       - 'spring'
       - 'no-admin'
       - 'spring-mysql'
+      - 'default'
     build:
       context: .
       dockerfile: Spring.Dockerfile
@@ -27,6 +28,7 @@ services:
     profiles:
       - 'react'
       - 'no-admin'
+      - 'default'
     build:
       context: .
       dockerfile: React.Dockerfile
@@ -52,6 +54,7 @@ services:
       - 'no-admin'
       - 'spring-mysql'
       - 'admin-mysql'
+      - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -77,6 +80,7 @@ services:
     profiles:
       - 'phpadmin'
       - 'admin-mysql'
+      - 'default'
     links:
       - mysql-db
     environment:

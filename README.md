@@ -11,17 +11,18 @@ WELCOME
 ### Using docker compose:
 
 #### Basic use
-To start
+To start all services
 ```bash
 # (sudo DOCKER_BUILDKIT=0)
-docker-compose up -d --build
+docker-compose --profile default up -d --build
 ```
 
-To stop
+To stop all services
 
 ```bash
 # (sudo)
-docker-compose down
+docker compose --profile default down
+
 ```
 
 #### Using profiles
