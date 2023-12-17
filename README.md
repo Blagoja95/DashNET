@@ -8,13 +8,54 @@ WELCOME
 
 ## Getting Started
 
-Using docker compose:
+### Using docker compose:
 
-To start `(sudo DOCKER_BUILDKIT=0) docker-compose up -d --build`
+#### Basic use
+To start all services
+```bash
+# (sudo DOCKER_BUILDKIT=0)
+docker-compose --profile default up -d --build
+```
 
-To stop `(sudo) docker-compose down`
+To stop all services
 
-Tomcat hot reload workaround => `docker compose restart spring-be`
+```bash
+# (sudo)
+docker compose --profile default down
+
+```
+
+#### Using profiles
+
+Running specific services can be done using predefined profiles.
+
+```bash
+docker-compose up # start all services
+docker-compose --profile spring up # start the spring-be service
+docker-compose --profile react up # nodejs services serving fe
+docker-compose --profile no-admin up -d # to run all services except phpMyAdmin. Run compose in detached mode (-d)
+```
+
+Profiles: <br>
+
+Spring back-end: `spring` <br>
+React front-end: `react` <br>
+MySQL: 			 `mysql` <br>
+Spring + MySQL:  `spring-mysql` <br>
+phpMyA + MySQL:  `admin-mysql` <br>
+
+#### Restart service
+Restart specific service or profile using profile name
+`docker compose --profile ${profile-name} restart`
+
+Tomcat hot reload workaround
+```bash
+docker compose --profile spring restart
+```
+
+```bash
+docker compose restart spring-be
+```
 
 ## API documentation
 
