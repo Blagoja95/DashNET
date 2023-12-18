@@ -2,6 +2,7 @@ package com.dashnet.dashNet.Task;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.sql.Date;
@@ -10,8 +11,9 @@ import java.util.Objects;
 @Entity
 public class Task
 {
-	private @Id
-	@GeneratedValue Long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	private Long creatorId;
 	private Long assagneId;
 	private Long teamId;
@@ -122,10 +124,7 @@ public class Task
 		this.description = description;
 	}
 
-	public Task()
-	{
-
-	}
+	Task () {}
 
 	@Override
 	public boolean equals(Object o)

@@ -1,38 +1,60 @@
 package com.dashnet.dashNet.Task;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.dashnet.dashNet.Task.Exceptions.TaskNotFoundException;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 
-@Controller
-@RequestMapping("/tasks")
+@RestController
+@RequestMapping(path = "/tasks")
 public class TaskController
 {
-	private TaskRepository taskRepository;
+	private final TaskRepository taskRepository;
 
-	@GetMapping("/")
+	TaskController(TaskRepository taskRepository)
+	{
+		this.taskRepository = taskRepository;
+	}
+
+	@GetMapping(value = {"", "/"})
 	public @ResponseBody Iterable<Task> getAllTasks()
 	{
 		return taskRepository.findAll();
 	}
 
-	@PostMapping("/create")
+	@GetMapping(path = "/{id}")
+	public @ResponseBody Task getOne(@PathVariable int id)
+	{
+		return taskRepository
+			.findById(id)
+			.orElseThrow(() -> new TaskNotFoundException(id));
+	}
+
+	@PostMapping(path = "/create")
 	public @ResponseBody String createTask(@RequestParam String title, @RequestParam String description)
 	{
 		Task t = new Task();
 
+		t.setAssagneId(123431432L);
+		t.setCommentTbId(123L);
 		t.setDescription(description);
 		t.setTitle(title);
-//		t.setCreatedDate(Date.valueOf(java.time.LocalDate.now()));
+		t.setStatus(0);
+		t.setTeamId(10101L);
+		t.setCreatorId(123L);
+		t.setCreatedDate(Date.valueOf(java.time.LocalDate.now()));
+		t.setDeadlineDate(Date.valueOf(java.time.LocalDate.now()));
 
 		taskRepository.save(t);
 
 		return "Saved";
+	}
+
+	@DeleteMapping(path = "/delete/{id}")
+	public @ResponseBody String deleteTask(@PathVariable int id)
+	{
+		taskRepository.deleteById(id);
+
+		return "Deleted";
 	}
 }
