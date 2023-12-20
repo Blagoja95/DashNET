@@ -43,6 +43,7 @@ React front-end: `react` <br>
 MySQL: 			 `mysql` <br>
 Spring + MySQL:  `spring-mysql` <br>
 phpMyA + MySQL:  `admin-mysql` <br>
+Spring + phpMyA + MySQL:  `spr-mysql-adm` <br>
 
 #### Restart service
 Restart specific service or profile using profile name

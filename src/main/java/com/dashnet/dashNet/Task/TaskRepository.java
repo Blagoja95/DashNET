@@ -4,6 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.dashnet.dashNet.Task.Task;
 
-public interface TaskRepository extends CrudRepository<Task, Integer> {
+import java.util.List;
 
+public interface TaskRepository extends CrudRepository<Task, Integer> {
+	List<Task> findByTitleLike(String title);
+
+//	List<Task> findBy(String name, String value);
 }
