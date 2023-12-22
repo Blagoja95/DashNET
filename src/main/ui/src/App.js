@@ -6,6 +6,7 @@ import Home from './components/pages/home/Home';
 import Search from './components/layout/search/Search'
 import {useDispatch} from 'react-redux';
 import { uiActions } from './store/slices/uiSlice';
+import Settings from './components/pages/settings/Settings';
 
 
 const App = () =>
@@ -39,6 +40,7 @@ const App = () =>
 
 						<Routes>
 							<Route path='/' element={ <Home/> }/>
+							<Route path='/settings' element={<Settings />} />
 							<Route path='/' element={ <div>Test</div> }/>
 							<Route path='*' element={ <section>404 TODO</section> }/>
 						</Routes>
