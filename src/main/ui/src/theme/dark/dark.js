@@ -12,8 +12,9 @@ const themeDark = {
 			main: '#95B1AF'
 		},
 		grey: {
-			main: '#252A31',
-			dark: '#1A1F1F'
+			main: '#1F1F1F',
+			dark: '#1A1A1A',
+			light: '#2E2E2E'
 		},
 		black: {
 			main: '#000000'

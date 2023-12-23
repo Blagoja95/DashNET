@@ -1,14 +1,19 @@
 import { Box, Input, Typography } from "@mui/material"
 
-const InputGroup = ({ label, type }) => {
+const InputGroup = ({ label, type, inpRef }) => {
 	return (
-		<Box sx={{ mb: 5, display: 'flex', alignItems: 'center', flex: 1 }}>
+		<Box sx={{ flex: 1, mb: 2 }}>
 			<Typography component='p'
-				sx={{ bgcolor: 'grey.main', color: 'white.light', p: 1.5, border: 1, borderColor: 'grey.main', textTransform: 'uppercase', textAlign: 'center', flex: 0.4}}>
+				sx={{ bgcolor: 'grey.main', color: 'white.light', border: 1, borderColor: 'grey.main', mb: 2 }}>
 				{label}
 			</Typography>
-			<Input
-				sx={{ bgcolor: 'white.main', color: 'grey.main', px: 1, py: 1, border: 0, flex: 1 }}
+			<Input color="grey" inputRef={inpRef}
+				sx={{
+					bgcolor: 'grey.dark', color: 'white.light', p: 1.3, width: '100%',
+					border: 2, borderColor: 'grey.light', borderRadius: 1,
+					':hover': { borderColor: 'white.light' }, ':focus-within': { borderColor: 'white.main' },
+					'&.MuiInput-root:before': { border: 0 }, '&.MuiInput-root:hover': { ':before': { border: 0 } }
+				}}
 				type={type}
 				placeholder={`Please enter your ${label.toLowerCase()}...`} />
 		</Box>
