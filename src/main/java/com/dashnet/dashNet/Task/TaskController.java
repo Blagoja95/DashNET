@@ -1,22 +1,25 @@
 package com.dashnet.dashNet.Task;
 
 import com.dashnet.dashNet.Task.Exceptions.TaskNotFoundException;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/tasks")
+@RequestMapping("/tasks")
 public class TaskController
 {
 	private final TaskRepository taskRepository;
 
+	private final TaskService taskService;
+
 	TaskController(TaskRepository taskRepository)
 	{
 		this.taskRepository = taskRepository;
+
+		this.taskService = new TaskService();
 	}
 
 	@GetMapping(value = {"", "/"})
@@ -25,8 +28,14 @@ public class TaskController
 		return taskRepository.findAll();
 	}
 
+	@GetMapping("/count")
+	public HashMap<String, Integer> getCount()
+	{
+		return taskService.countTasks(taskRepository);
+	}
+
 	@GetMapping(path = "/{id}")
-	public @ResponseBody Task getOne(@PathVariable int id)
+	public Task getOne(@PathVariable int id)
 	{
 		return taskRepository
 			.findById(id)
@@ -34,57 +43,69 @@ public class TaskController
 	}
 
 	@GetMapping("title/{param}")
-	public @ResponseBody List<Task> getByParam(@PathVariable String param)
+	public List<Task> getByTitle(@PathVariable String param)
 	{
-		return taskRepository.findByTitleLike(param);
+		return taskRepository.findByTitleContaining(param);
 	}
 
-//	@GetMapping("find/{what}/{val}")
-//	public @ResponseBody List<Task> getByParam(@PathVariable String what, @PathVariable String val)
-//	{
-//		return taskRepository.findBy(what, val);
-//	}
+	@GetMapping("description/{param}")
+	public List<Task> getByDescription(@PathVariable String param)
+	{
+		return taskRepository.findByDescriptionContaining(param);
+	}
 
 	@PostMapping(path = "/create")
-	public @ResponseBody String createTask(@RequestParam MultiValueMap<String, String> ReqMap)
+	public ResponseEntity<Object> createTask(@RequestParam HashMap<String, String> ReqMap)
 	{
-		Task t = new Task();
+		Task t = taskRepository.save(taskService.createTask(ReqMap));
 
-		t.setAssagneId(Long.valueOf(String.valueOf((ReqMap.getOrDefault("creatorid", null)))));
-		t.setCommentTbId(123L); // TODO: to be created
-		t.setDescription(String.valueOf(ReqMap.getOrDefault("description", null)));
-		t.setTitle(String.valueOf(ReqMap.getOrDefault("title", null)));
-		t.setStatus(0); // TODO: default is status not in progress
-		t.setTeamId(Long.valueOf(String.valueOf((ReqMap.getOrDefault("teamid", null)))));
-		t.setCreatorId(Long.valueOf(String.valueOf((ReqMap.getOrDefault("creatorid", null)))));
-		t.setCreatedDate(Date.valueOf(java.time.LocalDate.now()));
-		t.setDeadlineDate(Date.valueOf(java.time.LocalDate.now().plusMonths(1)));
+		HashMap<String, Object> res = new HashMap<String, Object>();
 
-		taskRepository.save(t);
+		res.put("status", 1);
+		res.put("taskid", t.getId());
+		res.put("info", "Task created successfully!");
 
-		return "Saved";
+		return ResponseEntity
+			.ok(new HashMap<>().put("tasks", res));
 	}
 
-	@DeleteMapping(path = "/delete/{id}")
-	public @ResponseBody String deleteTask(@PathVariable int id)
+	@DeleteMapping(path = "/delete")
+	public @ResponseBody ResponseEntity<Object> deleteTask(@RequestParam int id)
 	{
+		HashMap<String, Object> res = new HashMap<String, Object>();
+
 		taskRepository.deleteById(id);
 
-		return "Deleted";
+		res.put("status", 1);
+		res.put("taskid", id);
+		res.put("info", "Task deleted successfully!");
+
+		return ResponseEntity
+			.ok(new HashMap<String, Object>().put("tasks", res));
 	}
 
 	@PutMapping(path = "/update/{id}")
-	public Task updateTask(Task nTask, @PathVariable int id)
+	public ResponseEntity<Object> updateTask(Task nTask, @RequestParam int id)
 	{
+		HashMap<String, Object> res = new HashMap<String, Object>();
 
-		taskRepository.findById(id)
-			.ifPresent(tsk ->
+		res.put("info", "Something went wrong!");
+
+		return taskRepository.findById(id)
+			.map(tsk ->
 			{
 				nTask.setId(tsk.getId());
 
 				taskRepository.save(nTask);
-			});
 
-		return nTask;
+				res.put("status", 1);
+				res.put("taskid", nTask.getId());
+				res.replace("info", "Task deleted successfully!");
+
+				return ResponseEntity
+					.ok(new HashMap<>().put("tasks", res));
+			})
+			.orElse(ResponseEntity
+				.ok(new HashMap<>().put("tasks", res.put("status", 0))));
 	}
 }
