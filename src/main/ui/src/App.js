@@ -4,50 +4,51 @@ import { useEffect } from 'react';
 import Navigation from './components/layout/navigation/Navigation';
 import Home from './components/pages/home/Home';
 import Search from './components/layout/search/Search'
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from './store/slices/uiSlice';
 import Settings from './components/pages/settings/Settings';
+import Login from './components/pages/auth/login/Login';
+import Register from './components/pages/auth/register/Register';
 
 
-const App = () =>
-	{
-		const dispatch = useDispatch();
+const App = () => {
+	const activeUser = useSelector(state => state.user.activeUser);
+	const dispatch = useDispatch();
 
-		useEffect(() =>
-		{
-			const handleKey = (e) =>
-			{
-				if (e.ctrlKey && e.key === '/')
-				{
-					dispatch(uiActions.setSearchOpen(true));
-				}
-			};
+	useEffect(() => {
+		const handleKey = (e) => {
+			if (e.ctrlKey && e.key === '/') {
+				dispatch(uiActions.setSearchOpen(true));
+			}
+		};
 
-			document.addEventListener('keydown', handleKey);
+		document.addEventListener('keydown', handleKey);
 
-			return () => {document.removeEventListener('keydown', handleKey)};
-		}, []);
+		return () => { document.removeEventListener('keydown', handleKey) };
+	}, []);
 
-		return (
-			<Box display='flex'>
-				<Navigation/>
-				<Box sx={ {
-					width: '100%',
-					p: '2rem 4rem 1rem 4rem'
-				} }>
+	return (
+		<Box display='flex'>
+			{activeUser && <Navigation />}
+			<Box sx={{
+				width: '100%',
+				p: '2rem 4rem 1rem 4rem'
+			}}>
 
-						<Search/>
+				<Search />
 
-						<Routes>
-							<Route path='/' element={ <Home/> }/>
-							<Route path='/settings' element={<Settings />} />
-							<Route path='/' element={ <div>Test</div> }/>
-							<Route path='*' element={ <section>404 TODO</section> }/>
-						</Routes>
-				</Box>
+				<Routes>
+					<Route path='/' element={activeUser ? <Home /> : <Login />} />
+					<Route path='/settings' element={<Settings />} />
+					<Route path='/auth/login' element={activeUser ? <Home /> : <Login />} />
+					<Route path='/auth/register' element={activeUser ? <Home /> : <Register />} />
+					<Route path='/' element={<div>Test</div>} />
+					<Route path='*' element={<section>404 TODO</section>} />
+				</Routes>
 			</Box>
-		);
-	}
-;
+		</Box>
+	);
+}
+	;
 
 export default App;
