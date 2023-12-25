@@ -14,7 +14,7 @@ const Profession = ({ inpRef }) => {
 				disablePortal
 				options={professions}
 				renderInput={(params) => <TextField placeholder="Please select a profession..." inputRef={inpRef}
-					sx={{ bgcolor: 'grey.dark', '& fieldset': { border: 2, borderColor: 'grey.light' } }}
+					sx={{ bgcolor: 'grey.dark', '& fieldset': { border: 1, borderColor: 'grey.light' } }}
 					color="white" {...params} />} />
 		</Box>
 	)

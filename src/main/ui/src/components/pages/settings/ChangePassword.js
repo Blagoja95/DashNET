@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material"
-import InputGroup from "./InputGroup"
+import InputGroup from "../../ui/InputGroup"
 import { useRef } from "react";
 
 const ChangePassword = () => {
