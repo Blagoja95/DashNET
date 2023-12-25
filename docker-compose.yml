@@ -5,7 +5,6 @@ services:
   spring-be:
     container_name: dashNet-spring
     profiles:
-      - 'spring'
       - 'no-admin'
       - 'spring-mysql'
       - 'spr-mysql-adm'
