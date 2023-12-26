@@ -3,10 +3,13 @@ import { Box, Typography, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../../store/slices/uiSlice';
+import { useRef } from "react";
+import UserMenu from "./menu/UserMenu";
 
 const Header = ({ titleTxt, subtitleTxt }) =>
 {
 	const dispatch = useDispatch();
+	const refUser = useRef(null);
 
 	return <Box
 		sx={ {
@@ -53,8 +56,11 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 							borderRadius: '999999%'
 						}
 					} }
-				onClick={() => console.log('User menu')}>
-					<UserAvatar data={ { src: 'https://randomuser.me/api/portraits/lego/2.jpg' } }/>
+					onClick={ () => dispatch(uiActions.setUserMenuOpen(true)) }
+					ref={ refUser }>
+					<UserAvatar
+						data={ { src: 'https://randomuser.me/api/portraits/lego/2.jpg' } }/>
+					<UserMenu refP={ refUser }/>
 				</Box>
 			</Box>
 		</Box>
