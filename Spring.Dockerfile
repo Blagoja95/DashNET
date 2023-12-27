@@ -1,29 +1,19 @@
-FROM eclipse-temurin:17-jdk-alpine as build
+FROM eclipse-temurin:17-jdk-alpine
 
 LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
-WORKDIR /workspace/app
+USER root
 
-COPY .mvn .mvn
-COPY mvnw .
-COPY pom.xml .
+WORKDIR /app
 
-COPY src src
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
 
 RUN dos2unix mvnw && chmod +x mvnw
 
-RUN ./mvnw install -DskipTests
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+RUN ./mvnw dependency:resolve
 
-FROM eclipse-temurin:17-jdk-alpine
+COPY src/main/java ./src/main/java
+COPY src/main/resources ./src/main/resources
 
-VOLUME /tmp
-
-ARG DEPENDENCY=/workspace/app/target/dependency
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-
-ENTRYPOINT ["java","-cp","app:app/lib/*","dashnet.dashNet.DashNetApplication"]
-
-#DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose --profile spring-mysql  up -d --build
+CMD ["./mvnw", "spring-boot:run"]
