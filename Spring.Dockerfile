@@ -2,12 +2,8 @@ FROM eclipse-temurin:17-jdk-alpine
 
 LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
-USER root
-
-WORKDIR /app
-
 COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY mvnw mvnw.cmd pom.xml ./
 
 RUN dos2unix mvnw && chmod +x mvnw
 
