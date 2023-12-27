@@ -1,11 +1,12 @@
-import { Avatar, Divider, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Divider, Menu, MenuItem, Typography } from "@mui/material";
+import {Logout, PersonAdd, GroupAdd, Settings, AddTask} from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 import { uiActions } from "../../../../store/slices/uiSlice";
 import { userActions } from "../../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import ItemMenu from "./ItemMenu";
 
-const UserMenu = ({ refP }) =>
+const UserMenu = ({ refP, open }) =>
 {
 	const dispatch = useDispatch();
 	const nav = useNavigate();
@@ -28,71 +29,38 @@ const UserMenu = ({ refP }) =>
 
 		handleClose();
 	};
-	console.log(useSelector(state => state.ui.userMenuOpen))
+
+	const handleAddNewAcc = () =>
+	{
+		nav('/nusers'); //TOOD
+
+		handleClose();
+	}
+
+	const items = [
+		{fn: handleClose, txt: 'Create new team', icon: <GroupAdd fontSize="small"/>},
+		{fn: handleAddNewAcc, txt: 'Create new user', icon: <PersonAdd fontSize="small"/>},
+		{fn: handleClose, txt: 'Create new task', icon: <AddTask fontSize="small"/>},
+		{fn: handleSettings, txt: 'Settings', icon: <Settings fontSize="small"/>},
+		{fn: handleLogout, txt: 'Logout', icon: <Logout fontSize="small"/>},]
+
 	return <Menu
 		anchorEl={ refP.current }
 		id="account-menu"
-		open={ useSelector(state => state.ui.userMenuOpen) }
+		open={ open }
 		onClose={ handleClose }
-		sx={ {
-			elevation: 0,
-			sx: {
-				overflow: 'visible',
-				filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-				mt: 1.5,
-				'& .MuiAvatar-root': {
-					width: 32,
-					height: 32,
-					ml: -0.5,
-					mr: 1,
-				},
-				'&::before': {
-					content: '""',
-					display: 'block',
-					position: 'absolute',
-					top: 0,
-					right: 14,
-					width: 10,
-					height: 10,
-					bgcolor: 'background.paper',
-					transform: 'translateY(-50%) rotate(45deg)',
-					zIndex: 0,
-				},
-			},
-		} }
-		transformOrigin={ { horizontal: 'right', vertical: 'top' } }
-		anchorOrigin={ { horizontal: 'right', vertical: 'bottom' } }
-	>
+		transformOrigin={ { horizontal: 'center', vertical: 'top' } }
+		anchorOrigin={ { horizontal: 'center', vertical: 'bottom' } }>
+
 		<MenuItem onClick={ handleClose }>
 			<Avatar/>
-
 			<Typography sx={ { paddingLeft: 2 } }>
 				Profile
 			</Typography>
 		</MenuItem>
-
 		<Divider/>
 
-		<MenuItem onClick={ handleClose }>
-			<ListItemIcon>
-				<PersonAdd fontSize="small"/>
-			</ListItemIcon>
-			Add another account
-		</MenuItem>
-
-		<MenuItem onClick={ handleSettings }>
-			<ListItemIcon>
-				<Settings fontSize="small"/>
-			</ListItemIcon>
-			Settings
-		</MenuItem>
-
-		<MenuItem onClick={ handleLogout }>
-			<ListItemIcon>
-				<Logout fontSize="small"/>
-			</ListItemIcon>
-			Logout
-		</MenuItem>
+		{items.map(item => <ItemMenu fn={item.fn} icon={item.icon} txt={item.txt} key={item.text + '-' + Math.random()}/>)}
 	</Menu>;
 };
 

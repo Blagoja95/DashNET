@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography, Button } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { uiActions } from '../../../store/slices/uiSlice';
 import { useRef } from "react";
 import UserMenu from "./menu/UserMenu";
@@ -10,7 +10,7 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 {
 	const dispatch = useDispatch();
 	const refUser = useRef(null);
-
+	const open = useSelector(state => state.ui.userMenuOpen);
 	return <Box
 		sx={ {
 			p: '1rem',
@@ -51,16 +51,18 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 					sx={ {
 						cursor: 'pointer',
 						border: '2px solid transparent',
+						marginRight: 6,
 						'&:hover': {
 							border: '2px solid',
 							borderRadius: '999999%'
 						}
 					} }
-					onClick={ () => dispatch(uiActions.setUserMenuOpen(true)) }
+					onClick={ () => dispatch(uiActions.setUserMenuOpen(!open)) }
 					ref={ refUser }>
 					<UserAvatar
-						data={ { src: 'https://randomuser.me/api/portraits/lego/2.jpg' } }/>
-					<UserMenu refP={ refUser }/>
+						data={ {src: 'https://randomuser.me/api/portraits/lego/2.jpg'}}/>
+					<UserMenu refP={refUser}
+							  open={open}/>
 				</Box>
 			</Box>
 		</Box>
