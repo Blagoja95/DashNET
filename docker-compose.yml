@@ -4,15 +4,16 @@ services:
 
   spring-be:
     container_name: dashNet-spring
+    platform: linux
     profiles:
-      - 'spring'
       - 'no-admin'
       - 'spring-mysql'
+      - 'spr-mysql-adm'
       - 'default'
     build:
       context: .
       dockerfile: Spring.Dockerfile
-    restart: always
+    restart: on-failure
     deploy:
       mode: replicated
       replicas: 1
@@ -22,6 +23,12 @@ services:
       - .:/app
     networks:
       - dash-net
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/dashnetdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=thispasswordisnotsafe
 
   nodejs-fe:
     container_name: dashNet-react-fe
@@ -54,6 +61,7 @@ services:
       - 'no-admin'
       - 'spring-mysql'
       - 'admin-mysql'
+      - 'spr-mysql-adm'
       - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
@@ -80,6 +88,7 @@ services:
     profiles:
       - 'phpadmin'
       - 'admin-mysql'
+      - 'spr-mysql-adm'
       - 'default'
     links:
       - mysql-db

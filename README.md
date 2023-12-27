@@ -30,19 +30,20 @@ docker compose --profile default down
 Running specific services can be done using predefined profiles.
 
 ```bash
-docker-compose up # start all services
-docker-compose --profile spring up # start the spring-be service
-docker-compose --profile react up # nodejs services serving fe
-docker-compose --profile no-admin up -d # to run all services except phpMyAdmin. Run compose in detached mode (-d)
+docker compose --profile default up -d --build # start all services. Run compose in detached mode (-d)
+docker compose --profile spring up -d --build # start the spring-be service
+docker compose --profile react up -d --build # nodejs services serving fe
+docker compose --profile no-admin up -d --build # to run all services except phpMyAdmin.
 ```
 
 Profiles: <br>
 
-Spring back-end: `spring` <br>
 React front-end: `react` <br>
 MySQL: 			 `mysql` <br>
 Spring + MySQL:  `spring-mysql` <br>
 phpMyA + MySQL:  `admin-mysql` <br>
+Spring + phpMyA + MySQL:  `spr-mysql-adm` <br>
+default but w/o myPHPAdmin:  `no-admin` <br>
 
 #### Restart service
 Restart specific service or profile using profile name
@@ -56,6 +57,17 @@ docker compose --profile spring restart
 ```bash
 docker compose restart spring-be
 ```
+
+### Access to MySQL container
+
+In CLI:
+
+```bash
+docker exec -it dashNet-mysql mysql -u <USERNAME> -p
+```
+
+Change < USERNAME > to existing user role.
+After command is executed you'll be prompted to enter password.
 
 ## API documentation
 
