@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tasks")
@@ -23,89 +23,73 @@ public class TaskController
 	}
 
 	@GetMapping(value = {"", "/"})
-	public @ResponseBody Iterable<Task> getAllTasks()
+	public ResponseEntity<Map<String, Object>> getAllTasks()
 	{
-		return taskRepository.findAll();
+		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findAll());
 	}
 
 	@GetMapping("/count")
-	public HashMap<String, Integer> getCount()
+	public ResponseEntity<Map<String, Object>> getCount()
 	{
-		return taskService.countTasks(taskRepository);
+		return taskService.returnOkResponse(false, "", 1, true, taskService.countTasks(taskRepository));
 	}
 
 	@GetMapping(path = "/{id}")
-	public Task getOne(@PathVariable int id)
+	public ResponseEntity<Map<String, Object>> getOne(@PathVariable int id)
 	{
-		return taskRepository
+		Task a = taskRepository
 			.findById(id)
 			.orElseThrow(() -> new TaskNotFoundException(id));
+
+		return taskService.returnOkResponse(false, "", 1, true, a);
 	}
 
 	@GetMapping("title/{param}")
-	public List<Task> getByTitle(@PathVariable String param)
+	public ResponseEntity<Map<String, Object>> getByTitle(@PathVariable String param)
 	{
-		return taskRepository.findByTitleContaining(param);
+		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByTitleContaining(param));
 	}
 
 	@GetMapping("description/{param}")
-	public List<Task> getByDescription(@PathVariable String param)
+	public ResponseEntity<Map<String, Object>> getByDescription(@PathVariable String param)
 	{
-		return taskRepository.findByDescriptionContaining(param);
+		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByDescriptionContaining(param));
 	}
 
 	@PostMapping(path = "/create")
-	public ResponseEntity<Object> createTask(@RequestParam HashMap<String, String> ReqMap)
+	public ResponseEntity<Map<String, Object>> createTask(@RequestParam HashMap<String, String> ReqMap)
 	{
 		Task t = taskRepository.save(taskService.createTask(ReqMap));
 
-		HashMap<String, Object> res = new HashMap<String, Object>();
-
-		res.put("status", 1);
-		res.put("taskid", t.getId());
-		res.put("info", "Task created successfully!");
-
-		return ResponseEntity
-			.ok(new HashMap<>().put("tasks", res));
+		return taskService.returnOkResponse(true, "Task created successfully!", 1, true, t);
 	}
 
 	@DeleteMapping(path = "/delete")
-	public @ResponseBody ResponseEntity<Object> deleteTask(@RequestParam int id)
+	public @ResponseBody ResponseEntity<Map<String, Object>> deleteTask(@RequestParam int id)
 	{
-		HashMap<String, Object> res = new HashMap<String, Object>();
+		if (!taskRepository.existsById(id))
+		{
+			return taskService.returnOkResponse(true, "Task with id:" + id + " is not found!", 0, false, null);
+		}
 
 		taskRepository.deleteById(id);
 
-		res.put("status", 1);
-		res.put("taskid", id);
-		res.put("info", "Task deleted successfully!");
-
-		return ResponseEntity
-			.ok(new HashMap<String, Object>().put("tasks", res));
+		return taskService.returnOkResponse(true, "Task deleted successfully!", 1, false, null);
 	}
 
-	@PutMapping(path = "/update/{id}")
-	public ResponseEntity<Object> updateTask(Task nTask, @RequestParam int id)
+	@PutMapping("/update")
+	public ResponseEntity<Map<String, Object>> updateTask(Task nTask, @RequestParam int id)
 	{
-		HashMap<String, Object> res = new HashMap<String, Object>();
-
-		res.put("info", "Something went wrong!");
-
-		return taskRepository.findById(id)
+		return taskRepository
+			.findById(id)
 			.map(tsk ->
 			{
 				nTask.setId(tsk.getId());
 
 				taskRepository.save(nTask);
 
-				res.put("status", 1);
-				res.put("taskid", nTask.getId());
-				res.replace("info", "Task deleted successfully!");
-
-				return ResponseEntity
-					.ok(new HashMap<>().put("tasks", res));
+				return taskService.returnOkResponse(true, "Task updated successfully!", 1, true, nTask.getId());
 			})
-			.orElse(ResponseEntity
-				.ok(new HashMap<>().put("tasks", res.put("status", 0))));
+			.orElse(taskService.returnOkResponse(false, "Can't find task with id: " + id + "!", 0, false, null));
 	}
 }

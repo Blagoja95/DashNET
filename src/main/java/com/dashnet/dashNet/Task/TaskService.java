@@ -1,11 +1,16 @@
 package com.dashnet.dashNet.Task;
 
+import org.springframework.http.ResponseEntity;
+
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TaskService
 {
-	TaskService() {}
+	TaskService()
+	{
+	}
 
 	protected Task createTask(HashMap<String, String> ReqMap)
 	{
@@ -15,7 +20,7 @@ public class TaskService
 		t.setCommentTbId(0L); // TODO: to be created
 		t.setDescription(ReqMap.getOrDefault("description", "empty description"));
 		t.setTitle(ReqMap.getOrDefault("title", "empty title"));
-		t.setStatus(0); // TODO: default is status not in progress
+		t.setStatus(Integer.parseInt(ReqMap.getOrDefault("status", "0")));
 		t.setTeamId(Long.valueOf(ReqMap.getOrDefault("teamid", "0")));
 		t.setCreatorId(Long.valueOf(ReqMap.getOrDefault("createid", "0")));
 		t.setCreatedDate(Date.valueOf(java.time.LocalDate.now()));
@@ -66,5 +71,24 @@ public class TaskService
 		res.put("done", done);
 
 		return res;
+	}
+
+	protected ResponseEntity<Map<String, Object>> returnOkResponse(boolean inclMsg, String msg, int status, boolean inclData, Object data)
+	{
+		Map<String, Object> res = new HashMap<String, Object>();
+
+		res.put("status", status);
+
+		if (inclMsg)
+		{
+			res.put("info", msg);
+		}
+
+		if(inclData)
+		{
+			res.put("data", data);
+		}
+
+		return ResponseEntity.ok().body(res);
 	}
 }
