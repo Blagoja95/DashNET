@@ -8,9 +8,25 @@ WELCOME
 
 ## Getting Started
 
+REQUIREMENT:
+		[DOCKER](https://www.docker.com/products/docker-desktop/)
+
 ### Using docker compose:
 
 #### Basic use
+QA:
+	IN TERMINAL RUN FOLLOWING COMMAND
+
+```bash
+docker compose --profile QA up -d --build
+```
+
+WHEN DONE TURN OFF SERVICES
+
+```bash
+docker compose --profile QA DOWN
+```
+
 To start all services use `default` profile
 
 ```bash
@@ -40,11 +56,14 @@ docker compose --profile no-admin up -d --build # to run all services except php
 Profiles: <br>
 
 Run all services: `default` <br>
+Run only services necessary for testing: `QA` <br>
 React front-end: `react` <br>
 MySQL: 			 `mysql` <br>
 Spring + MySQL:  `spring-mysql` <br>
 phpMyA + MySQL:  `admin-mysql` <br>
 Spring + phpMyA + MySQL:  `spr-mysql-adm` <br>
+Spring + Swagger + MySQL:  `'swg-spr-mysql'` <br>
+Spring + Swagger + phpMyA + MySQL:  `'swg-spr-adm-mysql'` <br>
 default but w/o myPHPAdmin:  `no-admin` <br>
 
 #### Restart service
@@ -82,4 +101,15 @@ Or w/ GUI you can go to:
 
 ## API documentation
 
-Create [Swagger](https://swagger.io/)
+In CLI start services profile `swg-spr-mysql` :
+
+```bash
+docker compose --profile swg-spr-mysql up -d --build
+```
+
+THEN in browser open following links: <br>
+<br>
+To read and use API documentation: [SWAGGER UI](http//localhost:81) <BR>
+To edit API documentation: [SWAGGER__EDITOR](http//localhost:82)
+
+OR open local [swagger.yml](swagger.yml) file:

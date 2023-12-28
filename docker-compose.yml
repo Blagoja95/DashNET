@@ -6,9 +6,12 @@ services:
     container_name: dashNet-spring
     platform: linux
     profiles:
+      - 'QA'
       - 'no-admin'
       - 'spring-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
       - 'default'
     build:
       context: .
@@ -33,6 +36,7 @@ services:
   nodejs-fe:
     container_name: dashNet-react-fe
     profiles:
+      - 'QA'
       - 'react'
       - 'no-admin'
       - 'default'
@@ -57,11 +61,14 @@ services:
       dockerfile: MySql.Dockerfile
     container_name: dashNet-mysql
     profiles:
+      - 'QA'
       - 'mysql'
       - 'no-admin'
       - 'spring-mysql'
       - 'admin-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
       - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
@@ -76,7 +83,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DB_NAME}
     volumes:
-      - "dashnet-mysql:/var/lib/mysql"
+      - 'dashnet-mysql:/var/lib/mysql'
     networks:
       - dash-net
 
@@ -87,6 +94,7 @@ services:
       - 'phpadmin'
       - 'admin-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-adm-mysql'
       - 'default'
     links:
       - mysql-db
@@ -103,8 +111,34 @@ services:
     networks:
       - dash-net
 
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: 'swagger-editor-container'
+    ports:
+      - ${SWAGGER_EDITOR_PORT}:8080
+    profiles:
+      - 'swagger'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
+      - 'default'
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: 'swagger-ui-container'
+    profiles:
+      - 'swagger'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
+      - 'default'
+    ports:
+      - ${SWAGGER_UI_PORT}:8080
+    volumes:
+      - 'dashnet-swagger:/swagger.yml'
+    environment:
+      SWAGGER_JSON: /swagger.yml
+
 networks:
   dash-net: { }
 
 volumes:
   dashnet-mysql:
+  dashnet-swagger:
