@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	initialised: true,
-	searchOpen: false
+	searchOpen: false,
+	userMenuOpen: false
 }
 
 const uiSlice = createSlice({
@@ -14,6 +15,9 @@ const uiSlice = createSlice({
 		},
 		setSearchOpen(state, action) {
 			state.searchOpen = action.payload;
+		},
+		setUserMenuOpen: (state, action) => {
+			state.userMenuOpen = action.payload;
 		}
 	}
 })
