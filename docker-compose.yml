@@ -121,6 +121,13 @@ services:
       - 'swg-spr-mysql'
       - 'swg-spr-adm-mysql'
       - 'default'
+    volumes:
+      - 'dashnet-swagger:/dashNet-swagger.yaml'
+    environment:
+      SWAGGER_FILE: ./dashNet-swagger.yaml
+    networks:
+      - dash-net
+
   swagger-ui:
     image: swaggerapi/swagger-ui
     container_name: 'swagger-ui-container'
@@ -132,9 +139,11 @@ services:
     ports:
       - ${SWAGGER_UI_PORT}:8080
     volumes:
-      - 'dashnet-swagger:/swagger.yml'
+      - 'dashnet-swagger:/dashNet-swagger.yaml'
     environment:
-      SWAGGER_JSON: /swagger.yml
+      SWAGGER_JSON: /dashNet-swagger.yaml
+    networks:
+      - dash-net
 
 networks:
   dash-net: { }
