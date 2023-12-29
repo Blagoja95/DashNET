@@ -6,9 +6,12 @@ services:
     container_name: dashNet-spring
     platform: linux
     profiles:
+      - 'QA'
       - 'no-admin'
       - 'spring-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
       - 'default'
     build:
       context: .
@@ -16,9 +19,9 @@ services:
     restart: on-failure
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${SPRING_REPLICAS}
     ports:
-      - 8080:8080
+      - ${SPRING_PORT}:8080
     volumes:
       - .:/app
     networks:
@@ -26,13 +29,14 @@ services:
     depends_on:
       - mysql-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/dashnetdb
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=thispasswordisnotsafe
+      - SPRING_DATASOURCE_URL=${SPRING_DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DB_PASSWORD}
 
   nodejs-fe:
     container_name: dashNet-react-fe
     profiles:
+      - 'QA'
       - 'react'
       - 'no-admin'
       - 'default'
@@ -43,11 +47,11 @@ services:
     networks:
       - dash-net
     ports:
-      - 3000:3000
+      - ${NODE_PORT}:3000
     restart: always
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${NODE_REPLICAS}
     volumes:
       - ./src/main/ui/:/usr/src/app/
 
@@ -57,28 +61,29 @@ services:
       dockerfile: MySql.Dockerfile
     container_name: dashNet-mysql
     profiles:
+      - 'QA'
       - 'mysql'
       - 'no-admin'
       - 'spring-mysql'
       - 'admin-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
       - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${MYSQL_REPLICAS}
     ports:
-      - 3306:3306
-    expose:
-      - 3306
+      - ${MYSQL_PORT}:3306
     environment:
-      MYSQL_PASSWORD: "thispasswordisnotsafe"
-      MYSQL_ROOT_PASSWORD: "thispasswordisnotsafe"
-      MYSQL_DATABASE: "dashnetdb"
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
     volumes:
-      - "dashnet-mysql:/var/lib/mysql"
+      - 'dashnet-mysql:/var/lib/mysql'
     networks:
       - dash-net
 
@@ -89,19 +94,54 @@ services:
       - 'phpadmin'
       - 'admin-mysql'
       - 'spr-mysql-adm'
+      - 'swg-spr-adm-mysql'
       - 'default'
     links:
       - mysql-db
     environment:
-      PMA_HOST: mysql-db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
+      PMA_HOST: ${PMA_HOST}
+      PMA_PORT: ${PMA_DB_PORT}
+      PMA_ARBITRARY: ${PMA_ARBITRARY}
     restart: always
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${PMA_REPLICAS}
     ports:
-      - 8081:80
+      - ${PMA_PORT}:80
+    networks:
+      - dash-net
+
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: 'swagger-editor-container'
+    ports:
+      - ${SWAGGER_EDITOR_PORT}:8080
+    profiles:
+      - 'swagger'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
+      - 'default'
+    volumes:
+      - 'dashnet-swagger:/dashNet-swagger.yaml'
+    environment:
+      SWAGGER_FILE: ./dashNet-swagger.yaml
+    networks:
+      - dash-net
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: 'swagger-ui-container'
+    profiles:
+      - 'swagger'
+      - 'swg-spr-mysql'
+      - 'swg-spr-adm-mysql'
+      - 'default'
+    ports:
+      - ${SWAGGER_UI_PORT}:8080
+    volumes:
+      - 'dashnet-swagger:/dashNet-swagger.yaml'
+    environment:
+      SWAGGER_JSON: /dashNet-swagger.yaml
     networks:
       - dash-net
 
@@ -110,3 +150,4 @@ networks:
 
 volumes:
   dashnet-mysql:
+  dashnet-swagger:
