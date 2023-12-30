@@ -1,21 +1,25 @@
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { resetInitialised, uiActions } from '../../../store/slices/uiSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {useEffect} from 'react';
 import Header from '../../layout/header/Header';
 import Grid from '../../ui/grid/Grid';
-import { Box } from '@mui/material';
-import TeamCard from './TeamCard';
-import InfoCard from './InfoCard';
+import {Box} from '@mui/material';
+import TeamCard from './hcards/TeamCard';
+import InfoCard from './hcards/InfoCard';
+import HomeController from "./HomeController";
+import TeamHeader from "./teamHeader/TeamHeader";
+import { teamActions } from "../../../store/slices/teamSlice";
+
+
 
 const Home = () =>
 {
+	const controller = HomeController();
 	const dispatch = useDispatch();
 
 	useEffect(() =>
 	{
-		dispatch(uiActions.setInitialised(true));
-		dispatch(resetInitialised());
-	}, [ dispatch ]);
+		dispatch(teamActions.setTeams([{id: 123, label: 'Back-end team'}, {id: 1232, label: 'Technical documentation team'}, {id: 133, label: 'Front-end team'}]))
+	}, []);
 
 	return (
 		<>
@@ -25,32 +29,36 @@ const Home = () =>
 			/>
 
 			<Box
-				component={ 'main' }
-				sx={ {
+				component={'main'}
+				sx={{
 					display: 'flex',
 					gap: 5,
 					flexDirection: 'column',
 					justifyItems: 'center',
 					flexWrap: 'wrap'
-				} }>
+				}}>
+
+				<TeamHeader controller={controller}
+							data={useSelector(state => state.team.teams)}
+							value={useSelector(state => state.team.selectedTeam)}/>
 
 				<Box
-					component={ 'section' }
-					sx={ {
+					component={'section'}
+					sx={{
 						display: 'flex',
 						flexWrap: 'wrap',
 						gap: 5
-					} }>
+					}}>
 					<TeamCard/>
 					<InfoCard/>
 				</Box>
 
 				<Box
-					component={ 'section' }>
+					component={'section'}>
 					<Grid/>
 				</Box>
 			</Box>
 		</>
-	)};
+)};
 
 export default Home;

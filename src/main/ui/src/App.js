@@ -1,30 +1,38 @@
-import { Box } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import {Box} from '@mui/material';
+import {Route, Routes} from 'react-router-dom';
+import {useEffect} from 'react';
 import Navigation from './components/layout/navigation/Navigation';
 import Home from './components/pages/home/Home';
 import Search from './components/layout/search/Search'
-import { useDispatch, useSelector } from 'react-redux';
-import { uiActions } from './store/slices/uiSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {uiActions} from './store/slices/uiSlice';
 import Settings from './components/pages/settings/Settings';
 import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
 
-
-const App = () => {
+const App = () =>
+{
 	const activeUser = useSelector(state => state.user.activeUser);
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const handleKey = (e) => {
-			if (e.ctrlKey && e.key === '/') {
+	useEffect(() =>
+	{
+		const handleKey = (e) =>
+		{
+			if (e.ctrlKey && e.key === '/')
+			{
+				e.preventDefault();
+
 				dispatch(uiActions.setSearchOpen(true));
 			}
 		};
 
 		document.addEventListener('keydown', handleKey);
 
-		return () => { document.removeEventListener('keydown', handleKey) };
+		return () =>
+		{
+			document.removeEventListener('keydown', handleKey)
+		};
 	}, []);
 
 	return (
@@ -48,7 +56,6 @@ const App = () => {
 			</Box>
 		</Box>
 	);
-}
-	;
+};
 
 export default App;
