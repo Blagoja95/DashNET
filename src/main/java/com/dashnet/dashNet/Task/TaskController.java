@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/tasks")
 public class TaskController
 {

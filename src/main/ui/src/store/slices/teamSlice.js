@@ -13,7 +13,10 @@ const teamSlice = createSlice({
 		{
 			state.teams = action.payload;
 
-			state.selectedTeam = state.teams[0];
+			if (state.selectedTeam === null)
+			{
+				state.selectedTeam = state.teams[0];
+			}
 		},
 
 		setSelectedTeam(state, action)

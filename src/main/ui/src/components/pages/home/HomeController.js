@@ -15,7 +15,6 @@ const HomeController = () =>
 		if ( reason === 'selectOption' )
 		{
 			dispatch(teamActions.setSelectedTeam(val));
-
 		}
 	}
 

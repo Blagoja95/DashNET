@@ -9,7 +9,7 @@ const TeamHeader = ({controller, data, value, loading}) =>
 			display: "flex",
 			justifyContent: "space-between"
 		}}>
-		<Tooltip title={`Create a new Task for the selected team${"teamName" ? "- " + "teamName" + "." : "."}`}>
+		<Tooltip title={`Create a new Task for the selected team${value?.label && value.label.length > 0 ? ": " + value.label + "." : "."}`}>
 			<Button
 				onClick={controller.createTaskRedirect}>
 				<AddCircle fontSize="small"/>
@@ -24,6 +24,7 @@ const TeamHeader = ({controller, data, value, loading}) =>
 			sx={{ width: 300 }}
 			onChange={controller.handeValChange}
 			renderInput={(params) => <TextField {...params} label="Overall for Team"/>}
+			isOptionEqualToValue={(option, value) => option.id === value.id}
 		/>
 	</Box>;
 }

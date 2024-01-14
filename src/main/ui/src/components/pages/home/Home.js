@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import Header from '../../layout/header/Header';
 import Grid from '../../ui/grid/Grid';
@@ -7,9 +7,7 @@ import TeamCard from './hcards/TeamCard';
 import InfoCard from './hcards/InfoCard';
 import HomeController from "./HomeController";
 import TeamHeader from "./teamHeader/TeamHeader";
-import { teamActions } from "../../../store/slices/teamSlice";
-
-
+import {teamActions} from "../../../store/slices/teamSlice";
 
 const Home = () =>
 {
@@ -24,8 +22,8 @@ const Home = () =>
 	return (
 		<>
 			<Header
-				subtitleTxt={ 'Track your projects, tasks & team activity here' }
-				titleTxt={ 'Manage your projects' }
+				subtitleTxt={'Track your projects, tasks & team activity here'}
+				titleTxt={'Manage your projects'}
 			/>
 
 			<Box
@@ -49,8 +47,9 @@ const Home = () =>
 						flexWrap: 'wrap',
 						gap: 5
 					}}>
+
 					<TeamCard/>
-					<InfoCard/>
+					<InfoCard countData={count}/>
 				</Box>
 
 				<Box
@@ -59,6 +58,7 @@ const Home = () =>
 				</Box>
 			</Box>
 		</>
-)};
+	)
+};
 
 export default Home;
