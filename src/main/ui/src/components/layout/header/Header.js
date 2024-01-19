@@ -1,10 +1,10 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Tooltip } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
 import {useDispatch, useSelector} from 'react-redux';
 import { uiActions } from '../../../store/slices/uiSlice';
-import { useRef } from "react";
-import UserMenu from "./menu/UserMenu";
+import { useRef } from 'react';
+import UserMenu from './menu/UserMenu';
 
 const Header = ({ titleTxt, subtitleTxt }) =>
 {
@@ -38,14 +38,16 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 					alignItems: 'center',
 					gap: 4
 				} }>
-				<Button
-					onClick={ () =>  dispatch(uiActions.setSearchOpen(true))}>
-					<SearchIcon
-						color={ 'primary' }
-						sx={ {
-							cursor: 'pointer'
-						} }/>
-				</Button>
+				<Tooltip title={'Press CTRL + / to open search window'}>
+					<Button
+						onClick={ () => dispatch(uiActions.setSearchOpen(true)) }>
+						<SearchIcon
+							color={ 'primary' }
+							sx={ {
+								cursor: 'pointer'
+							} }/>
+					</Button>
+				</Tooltip>
 
 				<Box
 					sx={ {

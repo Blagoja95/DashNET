@@ -3,9 +3,8 @@ src/main/ui/build
 
 .dockerignore
 Dockerfile
-React.Dockerfile
-Spring.Dockerfile
-MySql.Dockerfile
+Dockerfile.dev
+*.Dockerfile
 Dockerfile.prod
 docker-compose.yml
 

@@ -8,7 +8,7 @@ services:
     profiles:
       - 'no-admin'
       - 'spring-mysql'
-      - 'spr-mysql-adm'
+      - 'spring-mysql-admin'
       - 'default'
     build:
       context: .
@@ -54,14 +54,14 @@ services:
   mysql-db:
     build:
       context: .
-      dockerfile: MySql.Dockerfile
+      dockerfile: src/main/db/MySql.Dockerfile
     container_name: dashNet-mysql
     profiles:
       - 'mysql'
       - 'no-admin'
       - 'spring-mysql'
-      - 'admin-mysql'
-      - 'spr-mysql-adm'
+      - 'mysql-admin'
+      - 'spring-mysql-admin'
       - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
@@ -85,14 +85,14 @@ services:
     container_name: php_my_admin
     profiles:
       - 'phpadmin'
-      - 'admin-mysql'
-      - 'spr-mysql-adm'
+      - 'mysql-admin'
+      - 'spring-mysql-admin'
       - 'default'
     links:
       - mysql-db
     environment:
       PMA_HOST: ${PMA_HOST}
-      PMA_PORT: ${PMA_DB_PORT}
+      PMA_PORT: ${MYSQL_PORT}
       PMA_ARBITRARY: ${PMA_ARBITRARY}
     restart: always
     deploy:

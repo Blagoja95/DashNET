@@ -1,23 +1,16 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect} from 'react';
 import Header from '../../layout/header/Header';
 import Grid from '../../ui/grid/Grid';
 import {Box} from '@mui/material';
 import TeamCard from './hcards/TeamCard';
 import InfoCard from './hcards/InfoCard';
-import HomeController from "./HomeController";
-import TeamHeader from "./teamHeader/TeamHeader";
-import {teamActions} from "../../../store/slices/teamSlice";
+import HomeController from './HomeController';
+import TeamHeader from './teamHeader/TeamHeader';
 
 const Home = () =>
 {
 	const controller = HomeController();
 	const dispatch = useDispatch();
-
-	useEffect(() =>
-	{
-		dispatch(teamActions.setTeams([{id: 123, label: 'Back-end team'}, {id: 1232, label: 'Technical documentation team'}, {id: 133, label: 'Front-end team'}]))
-	}, []);
 
 	return (
 		<>
@@ -49,12 +42,15 @@ const Home = () =>
 					}}>
 
 					<TeamCard/>
-					<InfoCard countData={count}/>
+					<InfoCard
+						controller={controller}
+						teamId={useSelector(state => state.team.selectedTeam?.id)}/>
 				</Box>
 
 				<Box
 					component={'section'}>
-					<Grid/>
+					<Grid controller={controller}
+						  teamId={useSelector(state => state.team.selectedTeam?.id)}/>
 				</Box>
 			</Box>
 		</>

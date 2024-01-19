@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,10 +30,16 @@ public class TaskController
 		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findAll());
 	}
 
-	@GetMapping("/count")
+	@GetMapping("/allCount")
 	public ResponseEntity<Map<String, Object>> getCount()
 	{
-		return taskService.returnOkResponse(false, "", 1, true, taskService.countTasks(taskRepository));
+		return taskService.returnOkResponse(false, "", 1, true, taskService.countTasks(taskRepository, (long) -1));
+	}
+
+	@GetMapping("/count/{teamID}")
+	public ResponseEntity<Map<String, Object>> getTeamTaskCount(@PathVariable Long teamID)
+	{
+		return taskService.returnOkResponse(false, "", 1, true, taskService.countTasks(taskRepository, teamID));
 	}
 
 	@GetMapping(path = "/{id}")
@@ -43,6 +50,17 @@ public class TaskController
 			.orElseThrow(() -> new TaskNotFoundException(id));
 
 		return taskService.returnOkResponse(false, "", 1, true, a);
+	}
+
+	@GetMapping("/team/{teamId}")
+	public ResponseEntity<Map<String, Object>> getByTeam(@PathVariable Long teamId)
+	{
+		List<Task> a = taskRepository
+			.findByTeamId(teamId);
+
+		return !a.isEmpty()
+			? taskService.returnOkResponse(false, "", 1, true, a)
+			: taskService.returnOkResponse(true, "No tasks found for selected team!", 0, false, null);
 	}
 
 	@GetMapping("title/{param}")

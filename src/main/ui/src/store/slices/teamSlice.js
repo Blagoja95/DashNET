@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	teams: [],
-	selectedTeam: null
+	teams: [{id: 200, label: 'Back-end team'}, {id: 100, label: 'Technical documentation team'}, {id: 300, label: 'Front-end team'}],
+	selectedTeam: {id: 100, label: 'Technical documentation team'},
+	teamStats: null,
+	teamTasks: []
 };
 
 const teamSlice = createSlice({
@@ -17,6 +19,16 @@ const teamSlice = createSlice({
 			{
 				state.selectedTeam = state.teams[0];
 			}
+		},
+
+		setTeamStats(state, action)
+		{
+			state.teamStats = action.payload;
+		},
+
+		setTeamTasks(state, action)
+		{
+			state.teamTasks = action.payload;
 		},
 
 		setSelectedTeam(state, action)
