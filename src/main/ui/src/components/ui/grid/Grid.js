@@ -1,74 +1,42 @@
-import { useState } from 'react';
-import {
-	Box,
-	Chip,
-	Paper,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	TablePagination
-} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination } from '@mui/material';
 
 import UserAvatar from '../avatar/UserAvatar';
+import { useSelector } from "react-redux";
 
 const dummyData = [ // TODO: remove later
-	{
-		id: 101,
-		title: 'Task 1',
-		user: { name: 'Marko Markovic', id: 221, src: 'https://randomuser.me/api/portraits/men/73.jpg' },
-		deadline: new Date().toLocaleString().split(',')[0],
-		statusT: 1
-	},
-	{ id: 1021, title: 'Task 3 sdasdasd', user: { name: 'Janko Jankovic', id: 222 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 2 },
-	{
-		id: 1011,
-		title: 'Task 4',
-		user: { name: 'Jovana Jovanovic', id: 223, src: 'https://randomuser.me/api/portraits/women/31.jpg' },
-		deadline: new Date().toLocaleString().split(',')[0],
-		statusT: 3
-	},
-	{
-		id: 1301,
-		title: 'Task sdsadasd sdasadasd',
-		user: { name: 'Ljubo Kobas', id: 224 },
-		deadline: new Date().toLocaleString().split(',')[0],
-		statusT: 0
-	},
-	{ id: 102416, title: 'Task asdsadsad', user: { name: 'Jovan Jovanovic', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 104215, title: 'Task asdsadsad', user: { name: 'Petar Petrovic', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 104314, title: 'Task asdsadsad', user: { name: 'Pero Peric', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 140413, title: 'Task asdsadsad', user: { name: 'Marko Markovic', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 1220412, title: 'Task asdsadsad', user: { name: 'Nikola Nikola', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 1016412, title: 'Task asdsadsad', user: { name: 'Test name', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 1204118, title: 'Task asdsadsad', user: { name: 'Name shit', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 44, title: 'Task asdsadsad', user: { name: 'Johan all', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 1073419, title: 'Task asdsadsad', user: { name: 'Jovo Bar', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 10123441, title: 'Task asdsadsad', user: { name: 'Marsal Peter', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 101234101, title: 'Task asdsadsad', user: { name: 'Johna Hill', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 },
-	{ id: 10123411, title: 'Task asdsadsad', user: { name: 'Margaret Roby', id: 225 }, deadline: new Date().toLocaleString().split(',')[0], statusT: 4 }
+	{ user: { name: 'Marko Markovic', id: 221, src: 'https://randomuser.me/api/portraits/men/73.jpg' }, statusT: 1 },
+	{  user: { name: 'Janko Jankovic', id: 222 }, statusT: 2 },
+	{  user: { name: 'Jovana Jovanovic', id: 223, src: 'https://randomuser.me/api/portraits/women/31.jpg' }, statusT: 3 },
+	{   user: { name: 'Ljubo Kobas', id: 224 }, statusT: 0 },
+	{   user: { name: 'Jovan Jovanovic', id: 225 }, statusT: 3 },
+	{   user: { name: 'Petar Petrovic', id: 225 }, statusT: 3},
+	{   user: { name: 'Pero Peric', id: 225 }, statusT: 3 },
+	{   user: { name: 'Marko Markovic', id: 225 }, statusT: 1 },
+	{  user: { name: 'Nikola Nikola', id: 225 }, statusT: 2 },
+	{  user: { name: 'Test name', id: 225 }, statusT: 0 },
+	{  user: { name: 'Name shit', id: 225 }, statusT: 0 },
+	{  user: { name: 'Johan all', id: 225 }, statusT: 1 },
+	{  user: { name: 'Jovo Bar', id: 225 }, statusT: 3 },
+	{  user: { name: 'Marsal Peter', id: 225 }, statusT: 2 },
+	{  user: { name: 'Johna Hill', id: 225 }, statusT: 2 },
+	{  user: { name: 'Margaret Roby', id: 225 }, statusT: 3 }
 ];
 
 const status = {
 	0: {
-		name: 'No status',
-		color: 'default'
-	},
-	1: {
 		name: 'Not started',
 		color: 'secondary'
 	},
-	2: {
+	1: {
 		name: 'In progress',
 		color: 'primary',
 	},
-	3: {
+	2: {
 		name: 'Review',
 		color: 'warning'
 	},
-	4: {
+	3: {
 		name: 'Done',
 		color: 'success'
 	}
@@ -99,8 +67,6 @@ export const getTableHeader = (type) =>
 		return <TableRow/>
 	}
 
-	let child = null;
-
 	switch (type)
 	{
 		case 'tasks':
@@ -122,6 +88,7 @@ export const getTableHeader = (type) =>
 				</TableCell>
 			</TableRow>
 
+		default:
 			break;
 	}
 };
@@ -133,7 +100,7 @@ export const getTableRows = (type, rows) =>
 		return <TableRow/>
 	}
 
-	return rows.map(row =>
+	return rows.map((row, i) =>
 
 		<TableRow
 			key={ row.id + '-task-' + row.title }
@@ -152,14 +119,14 @@ export const getTableRows = (type, rows) =>
 			</TableCell>
 
 			<TableCell align='left'>
-				<Chip color={ status[row.statusT].color }
-					  label={ status[row.statusT].name }
+				<Chip color={ status[row.status].color }
+					  label={ status[row.status].name }
 					  sx={ {
 						  width: 100
 					  } }/>
 			</TableCell>
 
-			<TableCell>
+			<TableCell> {/* TODO: when users URI is available change this*/}
 				<Box
 					sx={ {
 						display: 'flex',
@@ -168,8 +135,8 @@ export const getTableRows = (type, rows) =>
 						gap: 3
 					} }>
 					<UserAvatar data={ {
-						name: row.user.name,
-						src: row.user.src
+						name: dummyData[i].user.name,
+						src: dummyData[i].user.src
 					} }
 								sx={ {
 									width: 44,
@@ -178,7 +145,7 @@ export const getTableRows = (type, rows) =>
 
 					<Box
 						container={ 'span' }>
-						{ row.user.name }
+						{ dummyData[i].user.name }
 					</Box>
 				</Box>
 			</TableCell>
@@ -186,10 +153,15 @@ export const getTableRows = (type, rows) =>
 	);
 }
 
-const Grid = ({ gridType = 'tasks' }) =>
+const Grid = ({ gridType = 'tasks' , teamId, controller}) =>
 {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+
+	useEffect(() =>
+	{
+		controller.getTasks(teamId);
+	}, [teamId]);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -200,7 +172,8 @@ const Grid = ({ gridType = 'tasks' }) =>
 		setPage(0);
 	};
 
-	const slicedData = dummyData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+	const data = useSelector(state => state.team.teamTasks);
+	const slicedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 	return <TableContainer
 		component={ Paper }
@@ -224,14 +197,13 @@ const Grid = ({ gridType = 'tasks' }) =>
 		<TablePagination
 			rowsPerPageOptions={rowsPerPageOptions}
 			component='div'
-			count={dummyData.length}
+			count={data.length}
 			rowsPerPage={rowsPerPage}
 			page={page}
 			onPageChange={handleChangePage}
 			onRowsPerPageChange={handleChangeRowsPerPage}
 		/>
 	</TableContainer>
-
 };
 
 export default Grid;

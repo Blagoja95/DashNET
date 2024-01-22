@@ -1,16 +1,19 @@
-FROM node:21.0.0-alpine
+FROM node:21.0.0-alpine AS builder
 
 LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
 WORKDIR /usr/src/app
 
-RUN --mount=type=bind,source=./src/main/ui/package.json,target=package.json \
-    --mount=type=bind,source=./src/main/ui/package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --include=dev \
+COPY ./src/main/ui/package.json ./src/main/ui/package-lock.json ./
 
-USER node
+COPY ./src/main/ui/ ./
 
-COPY ./src/main/ui/ .
+RUN npm install --include=dev
+
+FROM node:21.0.0-alpine
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app .
 
 CMD npm run start

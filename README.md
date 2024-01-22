@@ -43,8 +43,8 @@ Run all services: `default` <br>
 React front-end: `react` <br>
 MySQL: 			 `mysql` <br>
 Spring + MySQL:  `spring-mysql` <br>
-phpMyA + MySQL:  `admin-mysql` <br>
-Spring + phpMyA + MySQL:  `spr-mysql-adm` <br>
+phpMyA + MySQL:  `mysql-admin` <br>
+Spring + phpMyA + MySQL:  `spring-mysql-admin` <br>
 default but w/o myPHPAdmin:  `no-admin` <br>
 
 #### Restart service

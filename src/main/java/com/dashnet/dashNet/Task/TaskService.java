@@ -4,13 +4,12 @@ import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TaskService
 {
-	TaskService()
-	{
-	}
+	TaskService() { }
 
 	protected Task createTask(HashMap<String, String> ReqMap)
 	{
@@ -29,44 +28,41 @@ public class TaskService
 		return t;
 	}
 
-	protected HashMap<String, Integer> countTasks(TaskRepository taskRepository)
+	protected HashMap<String, Integer> countTasks(TaskRepository taskRepository, Long teamID)
 	{
 		HashMap<String, Integer> res = new HashMap<>();
+		List<Task> a;
 
-		res.put("total", (int) taskRepository.count());
+		if (teamID != -1)
+		{
+			a = taskRepository.findByTeamId(teamID);
+		}
+		else
+		{
+			a = (List<Task>) taskRepository.findAll();
+		}
+
+		res.put("total", a.size());
 
 		int notStarted = 0;
-		int todo = 0;
+		int review = 0;
 		int inProgress = 0;
 		int done = 0;
 
-		for (Task t : taskRepository.findAll())
+		for (Task t : a)
 		{
 			switch (t.getStatus())
 			{
-				case 0:
-					notStarted++;
-					break;
-
-				case 1:
-					todo++;
-					break;
-
-				case 2:
-					inProgress++;
-					break;
-
-				case 3:
-					done++;
-					break;
-
-				default:
-					break;
+				case 0 -> notStarted++;
+				case 1 -> inProgress++;
+				case 2 -> review++;
+				case 3 -> done++;
+				default -> {}
 			}
 		}
 
 		res.put("notStarted", notStarted);
-		res.put("todo", todo);
+		res.put("review", review);
 		res.put("inProgress", inProgress);
 		res.put("done", done);
 
