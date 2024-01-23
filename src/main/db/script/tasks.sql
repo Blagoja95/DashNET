@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS task (
 	description TEXT
 );
 
+# CREATE TABLE IF NOT EXISTS user (
+# 	id INT AUTO_INCREMENT PRIMARY KEY,
+# 	fname VARCHAR(255) NOT NULL,
+# 	lname VARCHAR(255) NOT NULL,
+# 	email VARCHAR(255) NOT NULL UNIQUE,
+# 	password VARCHAR(255) NOT NULL
+# );
+
 -- *
 -- Init data for back end team
 -- *
