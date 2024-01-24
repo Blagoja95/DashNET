@@ -2,6 +2,7 @@ package com.dashnet.dashNet.User;
 
 import com.dashnet.dashNet.Security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements CommandLineRunner {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
@@ -18,6 +19,22 @@ public class UserService {
 	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		for (int i = 1; i < 5; i++) {
+			User user = new User();
+			String email = "johndoe" + i + "@gmail.com";
+			if (userRepository.findUserByEmail(email) == null) {
+				user.setEmail(email);
+				user.setFname("John");
+				user.setLname("Doe");
+				user.setPassword(passwordEncoder.encode("johndoe123"));
+
+				userRepository.save(user);
+			}
+		}
 	}
 
 	public ResponseEntity<UserResponse> getUsers() {
