@@ -85,7 +85,7 @@ public class UserService {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserResponse("Incorrect password!", 0));
 		String token = JwtUtils.generateToken(user.getEmail());
 
-		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, 1));
+		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, userByEmail, 1));
 	}
 
 	public ResponseEntity<UserResponse> deleteUser(Integer userId) {

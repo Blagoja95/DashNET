@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	initialised: true,
 	searchOpen: false,
-	userMenuOpen: false
+	userMenuOpen: false,
+	error: '',
+	success: ''
 }
 
 const uiSlice = createSlice({
@@ -18,6 +20,12 @@ const uiSlice = createSlice({
 		},
 		setUserMenuOpen: (state, action) => {
 			state.userMenuOpen = action.payload;
+		},
+		setError(state, action) {
+			state.error = action.payload;
+		},
+		setSuccess(state, action) {
+			state.success = action.payload;
 		}
 	}
 })
