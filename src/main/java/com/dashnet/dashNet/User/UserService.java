@@ -2,6 +2,7 @@ package com.dashnet.dashNet.User;
 
 import com.dashnet.dashNet.Security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,6 @@ public class UserService {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
-
 	public ResponseEntity<UserResponse> getUsers() {
 		List<User> users = userRepository.findAll();
 
@@ -85,7 +85,7 @@ public class UserService {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UserResponse("Incorrect password!", 0));
 		String token = JwtUtils.generateToken(user.getEmail());
 
-		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, 1));
+		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, userByEmail, 1));
 	}
 
 	public ResponseEntity<UserResponse> deleteUser(Integer userId) {

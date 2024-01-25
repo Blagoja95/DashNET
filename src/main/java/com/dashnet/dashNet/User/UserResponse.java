@@ -32,10 +32,13 @@ public class UserResponse {
 		this.status = status;
 	}
 
-	public UserResponse(String message, String token, Integer status) {
+	public UserResponse(String message, String token, User user, Integer status) {
+		user.setPassword(null);
+
 		this.message = message;
 		this.token = token;
 		this.status = status;
+		this.user = user;
 	}
 	public User getUser() {
 		return user;
