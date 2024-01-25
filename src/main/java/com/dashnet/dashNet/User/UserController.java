@@ -1,6 +1,7 @@
 package com.dashnet.dashNet.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class UserController {
 	@GetMapping(path="{userId}")
 	public @ResponseBody ResponseEntity<UserResponse> getUser(@PathVariable("userId") Integer userId) {
 		return userService.getUser(userId);
+	}
+
+	@GetMapping("/token")
+	public @ResponseBody ResponseEntity<UserResponse> getAuthUser(@RequestHeader (HttpHeaders.AUTHORIZATION) String authHeader) {
+		return userService.getAuthUser(authHeader);
 	}
 
 	@PostMapping(path = "/register")

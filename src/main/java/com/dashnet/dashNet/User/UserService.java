@@ -2,7 +2,6 @@ package com.dashnet.dashNet.User;
 
 import com.dashnet.dashNet.Security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +36,17 @@ public class UserService {
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userById));
 		}
+	}
 
+	public ResponseEntity<UserResponse> getAuthUser(String authHeader) {
+		String email = JwtUtils.getEmail(authHeader.substring(7));
+		User userByEmail = userRepository.findUserByEmail(email);
+
+		if (userByEmail != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userByEmail));
+		}
+
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserResponse("Token has expired", 0));
 	}
 
 	public ResponseEntity<UserResponse> register(User user) {
