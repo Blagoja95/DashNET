@@ -7,14 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { uiActions } from "../../../../store/slices/uiSlice";
 import { loginUser } from "../../../../store/controllers/userController";
+import {useCookies} from 'react-cookie';
 
 const Login = () => {
 	const error = useSelector(state => state.ui.error);
 	const success = useSelector(state => state.ui.success);
 	const loginRef = useRef({});
 	const dispatch = useDispatch();
+	const [cookie, setCookie] = useCookies(['JWTTKN']);
 
-	function loginHandler(e) {
+	async function  loginHandler(e) {
 		e.preventDefault();
 		const { email, password } = loginRef.current;
 
@@ -23,7 +25,7 @@ const Login = () => {
 			return;
 		}
 
-		dispatch(loginUser({email: email.value, password: password.value}));
+		dispatch(loginUser({email: email.value, password: password.value}, setCookie));
 	}
 	return (
 		<AuthContainer desc="Please enter your username and password to login." type='login'>

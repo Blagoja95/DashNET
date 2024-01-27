@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
 	activeUser: null,
-	btoken: ''
+	btoken: '',
+	sessionLoaded: false
 }
 
 const userSlice = createSlice({
@@ -14,6 +15,9 @@ const userSlice = createSlice({
 		},
 		setBToken(state, action) {
 			state.btoken = action.payload;
+		},
+		setSessionLoaded(state, action) {
+			state.sessionLoaded = action.payload;
 		}
 	}
 });
