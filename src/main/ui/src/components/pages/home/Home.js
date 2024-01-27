@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Header from '../../layout/header/Header';
 import Grid from '../../ui/grid/Grid';
 import {Box} from '@mui/material';
@@ -10,7 +10,6 @@ import TeamHeader from './teamHeader/TeamHeader';
 const Home = () =>
 {
 	const controller = HomeController();
-	const dispatch = useDispatch();
 
 	return (
 		<>

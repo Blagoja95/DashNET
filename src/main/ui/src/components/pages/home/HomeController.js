@@ -7,6 +7,7 @@ const HomeController = () =>
 {
 	const dispatch = useDispatch();
 	const selectedTeam = useSelector(state => state.team.selectedTeam);
+	const btoken = useSelector(state => state.user.btoken);
 	const nav = useNavigate();
 
 	const createTaskRedirect = () => nav('create/task?id=' + selectedTeam.id);
@@ -23,7 +24,8 @@ const HomeController = () =>
 
 	const getCount = async (teamId) =>
 	{
-		axios.get('http://localhost:8080/tasks/count/' + (teamId ?? -1))
+		axios.get('http://localhost:8080/tasks/count/' + (teamId ?? -1),
+			{ headers: {"Authorization" : `Bearer ${btoken}`} })
 			 .then(res =>
 			 {
 				 if (res.status === 200 && res.data.status)
@@ -36,7 +38,8 @@ const HomeController = () =>
 
 	const getTasks = async (teamId) =>
 	{
-		axios.get('http://localhost:8080/tasks/team/' + (teamId ?? -1))
+		axios.get('http://localhost:8080/tasks/team/' + (teamId ?? -1),
+			{ headers: {"Authorization" : `Bearer ${btoken}`} })
 			 .then(res =>
 			 {
 				 if (res.status === 200 && res.data.status)

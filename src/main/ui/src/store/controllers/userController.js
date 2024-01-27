@@ -7,7 +7,7 @@ export const registerUser = (data, onSuccess) => {
 		axios.post('http://localhost:8080/users/register', data)
 		.then(res => {
 			dispatch(uiActions.setSuccess(res.data.message));
-			onSuccess();
+			onSuccess(res);
 		})
 		.catch(err => {
 			dispatch(uiActions.setError(err.response.data.message));
@@ -22,7 +22,7 @@ export const loginUser = (data) => {
 			const {message, user, token} = res.data;
 			dispatch(uiActions.setSuccess(message));
 			dispatch(userActions.setActiveUser(user));
-			console.log(token);
+			dispatch(userActions.setBToken(token))
 		})
 		.catch(err => {
 			dispatch(uiActions.setError(err.response.data.message));
