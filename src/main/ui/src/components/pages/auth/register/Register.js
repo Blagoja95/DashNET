@@ -29,7 +29,12 @@ const Register = () => {
 		}
 
 		dispatch(registerUser({ fname: fname.value, lname: lname.value, email: email.value, password: password.value},
-			() => navigate('/auth/login')));
+			(res) => {
+				console.log(res.data);
+
+				// TODO: can we after registration immediately sign in user? For user to do it manually after registration is tidies work
+			navigate('/auth/login')
+		}));
 	}
 	return (
 		<AuthContainer desc="Please fill in your information to register." type='register'>
