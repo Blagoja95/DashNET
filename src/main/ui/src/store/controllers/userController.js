@@ -15,7 +15,7 @@ export const registerUser = (data, onSuccess) => {
 	}
 }
 
-export const loginUser = (data) => {
+	export const loginUser = (data, setCookie) => {
 	return async dispatch => {
 		axios.post('http://localhost:8080/users/login', data)
 		.then(res => {
@@ -23,9 +23,12 @@ export const loginUser = (data) => {
 			dispatch(uiActions.setSuccess(message));
 			dispatch(userActions.setActiveUser(user));
 			dispatch(userActions.setBToken(token))
+
+			setCookie('JWTTKN', token);
 		})
 		.catch(err => {
 			dispatch(uiActions.setError(err.response.data.message));
-		})
+		});
+
 	}
 }

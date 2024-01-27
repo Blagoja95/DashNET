@@ -9,6 +9,7 @@ import {uiActions} from './store/slices/uiSlice';
 import Settings from './components/pages/settings/Settings';
 import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
+import HandleSession from './components/pages/auth/HandleSession';
 
 const App = () =>
 {
@@ -42,7 +43,7 @@ const App = () =>
 				width: '100%',
 				p: '2rem 4rem 1rem 4rem'
 			}}>
-
+				<HandleSession/>
 				<Search />
 
 				<Routes>

@@ -1,13 +1,15 @@
-import { Avatar, Divider, Menu, MenuItem, Typography } from "@mui/material";
-import {Logout, PersonAdd, GroupAdd, Settings, AddTask} from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { uiActions } from "../../../../store/slices/uiSlice";
-import { userActions } from "../../../../store/slices/userSlice";
-import { useNavigate } from "react-router-dom";
-import ItemMenu from "./ItemMenu";
+import { Avatar, Divider, Menu, MenuItem, Typography } from '@mui/material';
+import {Logout, PersonAdd, GroupAdd, Settings, AddTask} from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../../../store/slices/uiSlice';
+import { userActions } from '../../../../store/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
+import ItemMenu from './ItemMenu';
+import {useCookies} from 'react-cookie';
 
 const UserMenu = ({ refP, open }) =>
 {
+	const [cookie, setCookie, removeCookie] = useCookies(['JWTTKN']);
 	const dispatch = useDispatch();
 	const nav = useNavigate();
 
@@ -19,6 +21,8 @@ const UserMenu = ({ refP, open }) =>
 	const handleLogout = () =>
 	{
 		dispatch(userActions.setActiveUser(null));
+
+		removeCookie('JWTTKN');
 
 		handleClose();
 	};
@@ -38,15 +42,15 @@ const UserMenu = ({ refP, open }) =>
 	}
 
 	const items = [
-		{fn: handleClose, txt: 'Create new team', icon: <GroupAdd fontSize="small"/>},
-		{fn: handleAddNewAcc, txt: 'Create new user', icon: <PersonAdd fontSize="small"/>},
-		{fn: handleClose, txt: 'Create new task', icon: <AddTask fontSize="small"/>},
-		{fn: handleSettings, txt: 'Settings', icon: <Settings fontSize="small"/>},
-		{fn: handleLogout, txt: 'Logout', icon: <Logout fontSize="small"/>},]
+		{fn: handleClose, txt: 'Create new team', icon: <GroupAdd fontSize='small'/>},
+		{fn: handleAddNewAcc, txt: 'Create new user', icon: <PersonAdd fontSize='small'/>},
+		{fn: handleClose, txt: 'Create new task', icon: <AddTask fontSize='small'/>},
+		{fn: handleSettings, txt: 'Settings', icon: <Settings fontSize='small'/>},
+		{fn: handleLogout, txt: 'Logout', icon: <Logout fontSize='small'/>},]
 
 	return <Menu
 		anchorEl={ refP.current }
-		id="account-menu"
+		id='account-menu'
 		open={ open }
 		onClose={ handleClose }
 		transformOrigin={ { horizontal: 'center', vertical: 'top' } }
