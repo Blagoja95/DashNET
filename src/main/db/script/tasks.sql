@@ -2,6 +2,10 @@ CREATE DATABASE IF NOT EXISTS dashnetdb;
 
 USE dashnetdb;
 
+-- *
+-- Tasks
+-- * *
+
 CREATE TABLE IF NOT EXISTS task (
 	 id INT AUTO_INCREMENT PRIMARY KEY,
 	 creator_id INT,
@@ -15,17 +19,7 @@ CREATE TABLE IF NOT EXISTS task (
 	description TEXT
 );
 
-# CREATE TABLE IF NOT EXISTS user (
-# 	id INT AUTO_INCREMENT PRIMARY KEY,
-# 	fname VARCHAR(255) NOT NULL,
-# 	lname VARCHAR(255) NOT NULL,
-# 	email VARCHAR(255) NOT NULL UNIQUE,
-# 	password VARCHAR(255) NOT NULL
-# );
-
--- *
 -- Init data for back end team
--- *
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
 	(1000, 100, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create users sql', 'Create SQL script for users. This script will be copied inside initdb folder');
@@ -66,17 +60,14 @@ INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, create
 VALUES
 	(1000, 200, 0, 200, 2, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'React service sometimes fails on win platform', '?');
 
--- *
 -- Init data for technical documentation team
--- *
-
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
 	(1000, 300, 0, 100, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Define documentation work flow', 'Where to write, Style, ...');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 100, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init readme', 'Technical documentation README markdown file with basic introduction text.');
+	(1000, 400, 0, 100, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init readme', 'Technical documentation README markdown file with basic introduction text.');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
@@ -84,19 +75,16 @@ VALUES
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Docker Compose docs', 'Write how to use docker compose and its services');
+	(1000, 400, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Docker Compose docs', 'Write how to use docker compose and its services');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Docker Compose docs', 'Write how to use docker compose and its services');
+	(1000, 400, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Docker Compose docs', 'Write how to use docker compose and its services');
 
--- *
 -- Init data for front end team
--- *
-
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 400, 0, 300, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init react', 'Init react files');
+	(1000, 500, 0, 300, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init react', 'Init react files');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
@@ -137,3 +125,35 @@ INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, create
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
 	(1000, 500, 0, 300, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Register', 'Register UI.');
+
+-- *
+-- Users
+-- * *
+
+CREATE TABLE IF NOT EXISTS user (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fname VARCHAR(255) NOT NULL,
+	lname VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL
+);
+
+-- back end team
+INSERT INTO user (id, email, fname, lname, password) VALUES (100,'janko.jankovic@beDev.com','Janko','Jankovic','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+INSERT INTO user (id, email, fname, lname, password) VALUES (200,'marko.markovic@beDev.com','Marko','Markovic','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+
+-- technical documentation team
+INSERT INTO user (id, email, fname, lname, password) VALUES (300,'mag.rob@docTeam.com','Margaret','Roby','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+INSERT INTO user (id, email, fname, lname, password) VALUES (400,'le.dicp@docTeam.com','Leonardo','DiCaprio','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+
+-- front end team
+INSERT INTO user (id, email, fname, lname, password) VALUES (500,'stpt@feDev.com','Sveta','Petka','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+INSERT INTO user (id, email, fname, lname, password) VALUES (600,'Clint.Eastwood@feDev.com','Clint','Eastwood','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+
+-- *
+-- Teams
+-- **
+
+-- *
+--	Comments
+-- **
