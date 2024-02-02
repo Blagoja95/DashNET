@@ -1,10 +1,9 @@
-version: '3'
+version: '3.8'
 
 services:
 
   spring-be:
     container_name: dashNet-spring
-    platform: linux
     profiles:
       - 'no-admin'
       - 'spring-mysql'
@@ -13,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: Spring.Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     deploy:
       mode: replicated
       replicas: ${SPRING_REPLICAS}
@@ -30,7 +29,17 @@ services:
       - SPRING_DATASOURCE_USERNAME=${SPRING_DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DB_PASSWORD}
 
-  nodejs-fe:
+  frontend-production:
+    container_name: dashNet-react-fe-pro
+    build:
+      context: .
+      dockerfile: docker/React.Production.Dockerfile
+    ports:
+      - ${FE_PRODUCTION_PORT}:80
+    profiles:
+      - 'production'
+
+  frontend-development:
     container_name: dashNet-react-fe
     profiles:
       - 'react'
@@ -38,18 +47,22 @@ services:
       - 'default'
     build:
       context: .
-      dockerfile: React.Dockerfile
-    image: dashnet-react-image
-    networks:
-      - dash-net
+      dockerfile: docker/React.Dockerfile
     ports:
       - ${NODE_PORT}:3000
-    restart: always
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
     deploy:
       mode: replicated
       replicas: ${NODE_REPLICAS}
     volumes:
-      - ./src/main/ui/:/usr/src/app/
+      - './src/main/ui/src:/app/src:delegate'
+    environment:
+      - FAST_REFRESH=false
+      - WDS_SOCKET_PORT=3000
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
 
   mysql-db:
     build:
@@ -65,7 +78,7 @@ services:
       - 'default'
     image: dashnet-mysql-image
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     deploy:
       mode: replicated
       replicas: ${MYSQL_REPLICAS}
@@ -94,7 +107,7 @@ services:
       PMA_HOST: ${PMA_HOST}
       PMA_PORT: ${MYSQL_PORT}
       PMA_ARBITRARY: ${PMA_ARBITRARY}
-    restart: always
+    restart: unless-stopped
     deploy:
       mode: replicated
       replicas: ${PMA_REPLICAS}
