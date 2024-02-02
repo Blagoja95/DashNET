@@ -14,7 +14,7 @@ const Home = () =>
 	return (
 		<>
 			<Header
-				subtitleTxt={'Track your projects, tasks & team activity here'}
+				subtitleTxt={'Track your projects, tasks & team activity here.'}
 				titleTxt={'Manage your projects'}
 			/>
 

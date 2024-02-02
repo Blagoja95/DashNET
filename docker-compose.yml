@@ -60,9 +60,9 @@ services:
       - './src/main/ui/src:/app/src:delegate'
     environment:
       - FAST_REFRESH=false
-      - WDS_SOCKET_PORT=3000
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
+      - WDS_SOCKET_PORT=${NODE_PORT}
+      - CHOKIDAR_USEPOLLING=${NODE_POLLING}
+      - WATCHPACK_POLLING=${NODE_POLLING}
 
   mysql-db:
     build:
