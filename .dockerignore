@@ -1,18 +1,13 @@
 src/main/ui/node_modules
 src/main/ui/build
+target
+*.test.js
 
-.dockerignore
-Dockerfile
-Dockerfile.dev
 *.Dockerfile
-Dockerfile.prod
 docker-compose.yml
 
-src/test
-
-target
-
 README.md
+.dockerignore
 .editorconfig
 .gitignore
 .github
