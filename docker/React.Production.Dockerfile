@@ -5,10 +5,7 @@ LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
-
-COPY ./src/main/ui/package.json ./
-COPY ./src/main/ui/package-lock.json ./
+COPY ./src/main/ui/package*.json .
 
 RUN npm install
 
