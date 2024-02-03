@@ -21,7 +21,6 @@ export const registerUser = (data, onSuccess) => {
 			const {message, user, token} = res.data;
 			dispatch(uiActions.setSuccess(message));
 			dispatch(userActions.setActiveUser(user));
-			console.log(user);
 			dispatch(userActions.setBToken(token))
 
 			setCookie('JWTTKN', token);
