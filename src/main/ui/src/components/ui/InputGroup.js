@@ -1,6 +1,6 @@
 import { Box, Input, Typography } from "@mui/material"
 
-const InputGroup = ({ label, type, inpRef, placeholder=`Please enter your ${label.toLowerCase()}...` }) => {
+const InputGroup = ({ label, type, inpRef, placeholder=`Please enter your ${label.toLowerCase()}...`}) => {
 	return (
 		<Box sx={{ flex: 1, mb: 2 }}>
 			<Typography component='p'
