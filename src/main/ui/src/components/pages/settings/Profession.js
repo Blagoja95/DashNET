@@ -1,6 +1,6 @@
 import { Autocomplete, Box, TextField, Typography } from "@mui/material"
 
-const Profession = ({ inpRef }) => {
+const Profession = ({ inpRef, defaultValue }) => {
 	const professions = [
 		'Software Engineer', 'QA Engineer', 'UI/UX Designer',
 		'Project Manager', 'Product Manager', 'Scrum Master'];
@@ -13,6 +13,7 @@ const Profession = ({ inpRef }) => {
 			<Autocomplete
 				disablePortal
 				options={professions}
+				defaultValue={defaultValue}
 				renderInput={(params) => <TextField placeholder="Please select a profession..." inputRef={inpRef}
 					sx={{ bgcolor: 'grey.dark', '& fieldset': { border: 1, borderColor: 'grey.light' } }}
 					color="white" {...params} />} />

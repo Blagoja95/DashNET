@@ -22,6 +22,7 @@ export const registerUser = (data, onSuccess) => {
 			dispatch(uiActions.setSuccess(message));
 			dispatch(userActions.setActiveUser(user));
 			dispatch(userActions.setBToken(token))
+			dispatch(userActions.setSessionLoaded(true));
 
 			setCookie('JWTTKN', token);
 		})
@@ -59,6 +60,7 @@ export const deleteUser = (id, cookie) => {
 			dispatch(userActions.setActiveUser(null));
 			dispatch(userActions.setBToken(""));
 			dispatch(userActions.setSessionLoaded(false));
+			dispatch(uiActions.setSuccess("Your account has been successfully deleted."));
 		})
 		.catch(err => {
 			dispatch(uiActions.setError(err.response.data.message));

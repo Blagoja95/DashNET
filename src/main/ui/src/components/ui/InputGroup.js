@@ -1,13 +1,13 @@
 import { Box, Input, Typography } from "@mui/material"
 
-const InputGroup = ({ label, type, inpRef, placeholder=`Please enter your ${label.toLowerCase()}...`}) => {
+const InputGroup = ({ label, type, inpRef, placeholder=`Please enter your ${label.toLowerCase()}...`, defaultValue}) => {
 	return (
 		<Box sx={{ flex: 1, mb: 2 }}>
 			<Typography component='p'
 				sx={{ bgcolor: 'grey.main', color: 'white.light', border: 1, borderColor: 'grey.main', mb: 2 }}>
 				{label}
 			</Typography>
-			<Input color="grey" inputRef={inpRef}
+			<Input color="grey" inputRef={inpRef} defaultValue={defaultValue}
 				sx={{
 					bgcolor: 'grey.dark', color: 'white.light', p: 1.3, width: '100%',
 					border: 1, borderColor: 'grey.light', borderRadius: 1,
