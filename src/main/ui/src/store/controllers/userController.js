@@ -32,6 +32,24 @@ export const registerUser = (data, onSuccess) => {
 	}
 }
 
+export const checkSession = (tkn) => {
+	return async (dispatch) => {
+		axios.get('http://localhost:8080/users/token',
+			{headers: {'Authorization': `Bearer ${tkn}`}})
+			.then(r => {
+
+				if (r.data.status === 1) {
+					dispatch(userActions.setActiveUser(r.data.user));
+					dispatch(userActions.setBToken(tkn));
+					dispatch(userActions.setSessionLoaded(true));
+				}
+			})
+			.catch(e => {
+				dispatch(uiActions.setError(e.response.data?.message ?? 'Something went wrong!'));
+			});
+	}
+}
+
 export const updateUser = (id, user, cookie) => {
 	return async dispatch => {
 		axios.put('http://localhost:8080/users/' + id, user, {
@@ -59,7 +77,7 @@ export const deleteUser = (id, cookie, removeCookie) => {
 		.then(res => {
 			dispatch(userActions.setActiveUser(null));
 			dispatch(userActions.setBToken(''));
-			dispatch(userActions.setSessionLoaded(false));
+			dispatch(userActions.setSessionLoaded(true));
 
 			removeCookie('JWTTKN');
 			dispatch(uiActions.setSuccess("Your account has been successfully deleted."));
