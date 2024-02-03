@@ -4,6 +4,8 @@ import com.dashnet.dashNet.Security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -100,9 +102,9 @@ public class UserService {
 	public ResponseEntity<UserResponse> deleteUser(Integer userId) {
 		boolean exists = userRepository.existsById(userId);
 
-		if (!exists) {
+		if (!exists)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User with that id does not exist", 0));
-		}
+
 
 		userRepository.deleteById(userId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new UserResponse("User deleted successfully.", 1));
@@ -116,6 +118,7 @@ public class UserService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User with that id does not exist.", 0));
 		}
 		user.setId(userId);
+		user.setPassword(userById.getPassword());
 		userRepository.save(user);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(user));

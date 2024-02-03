@@ -21,6 +21,8 @@ const UserMenu = ({ refP, open }) =>
 	const handleLogout = () =>
 	{
 		dispatch(userActions.setActiveUser(null));
+		dispatch(userActions.setBToken(''));
+		dispatch(userActions.setSessionLoaded(false));
 
 		removeCookie('JWTTKN');
 
