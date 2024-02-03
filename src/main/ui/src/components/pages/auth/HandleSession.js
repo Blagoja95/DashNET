@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
 import {userActions} from '../../../store/slices/userSlice';
 import axios from 'axios';
+import {uiActions} from "../../../store/slices/uiSlice";
 
 const HandleSession = () =>
 {
@@ -16,13 +17,14 @@ const HandleSession = () =>
 			.then(r => {
 
 				if (r.data.status === 1) {
-					dispatch(userActions.setActiveUser({email: r.data.email}));
+					dispatch(userActions.setActiveUser(r.data.user));
 					dispatch(userActions.setBToken(cookie.JWTTKN));
 					dispatch(userActions.setSessionLoaded(true));
 				}
 			})
-			.catch(e => {
-
+			.catch(e =>
+			{
+				dispatch(uiActions.setError(e.response.data?.message ?? 'Something went wrong!'));
 			});
 	}
 
