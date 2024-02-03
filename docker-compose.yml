@@ -67,7 +67,7 @@ services:
   mysql-db:
     build:
       context: .
-      dockerfile: src/main/db/MySql.Dockerfile
+      dockerfile: docker/MySql.Dockerfile
     container_name: dashNet-mysql
     profiles:
       - 'mysql'
