@@ -14,7 +14,7 @@ const UserInformation = () => {
 	const cookie = useSelector(state => state.user.btoken);
 
 	const inputsRef = useRef({});
-	const {id} = useSelector(state => state.ui.activeUser);
+	const activeUser = useSelector(state => state.user.activeUser);
 
 	function onSave() {
 		const { fname, lname, email, profession } = inputsRef.current;
@@ -23,23 +23,23 @@ const UserInformation = () => {
 			dispatch(uiActions.setError("Fields are required!"));
 			return false;
 		}
-		dispatch(updateUser(id, { fname: fname.value, lname: lname.value, email: email.value}, cookie));
+		dispatch(updateUser(activeUser.id, { fname: fname.value, lname: lname.value, email: email.value}, cookie));
 	}
 
 	function onDelete() {
-		dispatch(deleteUser(id, cookie));
+		dispatch(deleteUser(activeUser.id, cookie));
 	}
 	return (
 		<Box sx={{ borderRadius: 2, flex: 2, p: 5, bgcolor: 'grey.main' }}>
 			<Alert variant='filled' color='error' onClose={() => dispatch(uiActions.setError(""))} sx={{my: 1, display: error ? 'flex' : 'none'}}>{error}</Alert>
 			<Alert variant='filled' color='success' onClose={() => dispatch(uiActions.setSuccess(""))} sx={{my: 1, display: success ? 'flex' : 'none'}}>{success}</Alert>
 			<Box sx={{ display: 'flex', gap: 2 }}>
-				<InputGroup label='First name' type='text' inpRef={el => inputsRef.current.fname = el} />
-				<InputGroup label='Last name' type='text' inpRef={el => inputsRef.current.lname = el} />
+				<InputGroup label='First name' type='text' inpRef={el => inputsRef.current.fname = el} defaultValue={activeUser.fname} />
+				<InputGroup label='Last name' type='text' inpRef={el => inputsRef.current.lname = el} defaultValue={activeUser.lname} />
 			</Box>
 			<Box sx={{ display: 'flex', gap: 2 }}>
-				<InputGroup label='Email' type='email' inpRef={el => inputsRef.current.email = el} />
-				<Profession inpRef={el => inputsRef.current.profession = el} />
+				<InputGroup label='Email' type='email' inpRef={el => inputsRef.current.email = el} defaultValue={activeUser.email} />
+				<Profession inpRef={el => inputsRef.current.profession = el} defaultValue="Software Engineer" />
 			</Box>
 
 
