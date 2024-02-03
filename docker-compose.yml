@@ -11,7 +11,7 @@ services:
       - 'default'
     build:
       context: .
-      dockerfile: Spring.Dockerfile
+      dockerfile: ./docker/Spring.Dockerfile
     restart: unless-stopped
     deploy:
       mode: replicated
