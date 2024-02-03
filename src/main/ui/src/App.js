@@ -10,11 +10,13 @@ import Settings from './components/pages/settings/Settings';
 import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
 import HandleSession from './components/pages/auth/HandleSession';
+import { useCookies } from 'react-cookie';
 
 const App = () =>
 {
 	const activeUser = useSelector(state => state.user.activeUser);
 	const dispatch = useDispatch();
+	const [cookie] = useCookies('JWTTKN');
 
 	useEffect(() =>
 	{
@@ -34,7 +36,7 @@ const App = () =>
 		{
 			document.removeEventListener('keydown', handleKey)
 		};
-	}, [activeUser]);
+	}, [activeUser, dispatch]);
 
 	return (
 		<Box display='flex'>
@@ -43,7 +45,7 @@ const App = () =>
 				width: '100%',
 				p: '2rem 4rem 1rem 4rem'
 			}}>
-				<HandleSession/>
+				{cookie.JWTTKN && <HandleSession/>}
 				<Search />
 
 				<Routes>

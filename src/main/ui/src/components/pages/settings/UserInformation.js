@@ -5,13 +5,14 @@ import { uiActions } from "../../../store/slices/uiSlice"
 import { useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { deleteUser, updateUser } from "../../../store/controllers/userController"
+import { useCookies } from "react-cookie"
 
 const UserInformation = () => {
 	const dispatch = useDispatch();
 
 	const error = useSelector(state => state.ui.error);
 	const success = useSelector(state => state.ui.success);
-	const cookie = useSelector(state => state.user.btoken);
+	const [cookie, setCookie, removeCookie] = useCookies(['JWTTKN']);
 
 	const inputsRef = useRef({});
 	const activeUser = useSelector(state => state.user.activeUser);
@@ -23,11 +24,11 @@ const UserInformation = () => {
 			dispatch(uiActions.setError("Fields are required!"));
 			return false;
 		}
-		dispatch(updateUser(activeUser.id, { fname: fname.value, lname: lname.value, email: email.value}, cookie));
+		dispatch(updateUser(activeUser.id, { fname: fname.value, lname: lname.value, email: email.value}, cookie.JWTTKN));
 	}
 
 	function onDelete() {
-		dispatch(deleteUser(activeUser.id, cookie));
+		dispatch(deleteUser(activeUser.id, cookie.JWTTKN, removeCookie));
 	}
 	return (
 		<Box sx={{ borderRadius: 2, flex: 2, p: 5, bgcolor: 'grey.main' }}>
