@@ -49,7 +49,7 @@ export const updateUser = (id, user, cookie) => {
 	}
 }
 
-export const deleteUser = (id, cookie) => {
+export const deleteUser = (id, cookie, removeCookie) => {
 	return async dispatch => {
 		axios.delete('http://localhost:8080/users/' + id, {
 			headers: {
@@ -58,8 +58,10 @@ export const deleteUser = (id, cookie) => {
 		})
 		.then(res => {
 			dispatch(userActions.setActiveUser(null));
-			dispatch(userActions.setBToken(""));
+			dispatch(userActions.setBToken(''));
 			dispatch(userActions.setSessionLoaded(false));
+
+			removeCookie('JWTTKN');
 			dispatch(uiActions.setSuccess("Your account has been successfully deleted."));
 		})
 		.catch(err => {
