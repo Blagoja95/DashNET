@@ -11,14 +11,26 @@ WELCOME
 ### Using docker compose:
 
 #### Basic use
-To start all services use `default` profile
+
+1. Open terminal
+
+2. Go to this project root (example: C:\Users\userName\DashNET)
+
+3. copy .env file from existing example .env.example using command:
 
 ```bash
-# sudo DOCKER_BUILDKIT=0
+cp .env.example .env
+```
+
+4. Start docker compose using command:
+
+```bash
 docker compose --profile default up -d --build
 ```
 
-To stop all services
+5. Go to your browser -> type localhost:3000 url bar and press enter
+
+To stop all services execute following command in project root;
 
 ```bash
 # sudo
