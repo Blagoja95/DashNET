@@ -4,10 +4,10 @@ LABEL maintainer="Boris Blagojević <boris.blagojevicc@hotmail.com>"
 
 WORKDIR /app
 
-COPY ./src/main/ui/package*.json .
+COPY ./app/web/package*.json .
 
 RUN npm install
 
-COPY ./src/main/ui .
+COPY ./app/web .
 
 CMD npm start
