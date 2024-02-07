@@ -30,7 +30,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DB_PASSWORD}
 
   frontend-production:
-    container_name: dashNet-react-fe-pro
+    container_name: dashNet-web-production
     build:
       context: .
       dockerfile: docker/React.Production.Dockerfile
@@ -40,7 +40,7 @@ services:
       - 'production'
 
   frontend-development:
-    container_name: dashNet-react-fe
+    container_name: dashNet-web-development
     profiles:
       - 'react'
       - 'no-admin'
@@ -95,7 +95,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: php_my_admin
+    container_name: dashNet-php-my-admin
     profiles:
       - 'phpadmin'
       - 'mysql-admin'
