@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	teams: [{id: 200, label: 'Back-end team'}, {id: 100, label: 'Technical documentation team'}, {id: 300, label: 'Front-end team'}],
-	selectedTeam: {id: 100, label: 'Technical documentation team'},
+	teams: [ { id: 200, label: 'Back-end team' }, { id: 100, label: 'Technical documentation team' }, { id: 300, label: 'Front-end team' } ],
+	selectedTeam: { id: 100, label: 'Technical documentation team' },
 	teamStats: null,
 	teamTasks: []
 };
@@ -34,6 +34,16 @@ const teamSlice = createSlice({
 		setSelectedTeam(state, action)
 		{
 			state.selectedTeam = action.payload;
+		},
+
+		setTaskStatus(state, action)
+		{
+			const index = state.teamTasks.findIndex(obj => obj.id === action.payload.id);
+
+			if (index !== -1)
+			{
+				state.teamTasks[index].status = action.payload.status;
+			}
 		}
 	}
 });

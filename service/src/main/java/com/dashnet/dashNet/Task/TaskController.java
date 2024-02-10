@@ -1,5 +1,6 @@
 package com.dashnet.dashNet.Task;
 
+import com.dashnet.dashNet.Task.Exceptions.TaskGenericException;
 import com.dashnet.dashNet.Task.Exceptions.TaskNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/tasks")
 public class TaskController
 {
@@ -43,7 +43,7 @@ public class TaskController
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Map<String, Object>> getOne(@PathVariable int id)
+	public ResponseEntity<Map<String, Object>> getOne(@PathVariable Long id)
 	{
 		Task a = taskRepository
 			.findById(id)
@@ -58,9 +58,12 @@ public class TaskController
 		List<Task> a = taskRepository
 			.findByTeamId(teamId);
 
-		return !a.isEmpty()
-			? taskService.returnOkResponse(false, "", 1, true, a)
-			: taskService.returnOkResponse(true, "No tasks found for selected team!", 0, false, null);
+		if(a.isEmpty())
+		{
+			throw new TaskGenericException("No tasks found for selected team!");
+		}
+
+		return taskService.returnOkResponse(false, "", 1, true, a);
 	}
 
 	@GetMapping("title/{param}")
@@ -84,20 +87,20 @@ public class TaskController
 	}
 
 	@DeleteMapping(path = "/delete")
-	public @ResponseBody ResponseEntity<Map<String, Object>> deleteTask(@RequestParam int id)
+	public @ResponseBody ResponseEntity<Map<String, Object>> deleteTask(@RequestBody Task ob)
 	{
-		if (!taskRepository.existsById(id))
+		if (!taskRepository.existsById(ob.getId()))
 		{
-			return taskService.returnOkResponse(true, "Task with id:" + id + " is not found!", 0, false, null);
+			throw new TaskNotFoundException(ob.getId());
 		}
 
-		taskRepository.deleteById(id);
+		taskRepository.deleteById(ob.getId());
 
 		return taskService.returnOkResponse(true, "Task deleted successfully!", 1, false, null);
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Map<String, Object>> updateTask(Task nTask, @RequestParam int id)
+	public ResponseEntity<Map<String, Object>> updateTask(Task nTask, @RequestParam Long id)
 	{
 		return taskRepository
 			.findById(id)
@@ -109,6 +112,22 @@ public class TaskController
 
 				return taskService.returnOkResponse(true, "Task updated successfully!", 1, true, nTask.getId());
 			})
-			.orElse(taskService.returnOkResponse(false, "Can't find task with id: " + id + "!", 0, false, null));
+			.orElseThrow(() -> new TaskNotFoundException(id));
+	}
+
+	@PatchMapping("update/status/ow")
+	public ResponseEntity<Map<String, Object>> updateOneWay(@RequestBody Task ob)
+	{
+		return taskRepository
+			.findById(ob.getId())
+			.map(tsk ->
+			{
+				tsk.setStatus(tsk.getStatus() >= 3 ? 0 : tsk.getStatus() + 1);
+
+				taskRepository.save(tsk);
+
+				return taskService.returnOkResponse(true, "Task status changed successfully!", 1, true, tsk);
+			})
+			.orElseThrow(() -> new TaskNotFoundException(ob.getId()));
 	}
 }

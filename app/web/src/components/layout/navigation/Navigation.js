@@ -28,7 +28,7 @@ const Navigation = () => {
 				'& .MuiPaper-root':
 				{
 					bgcolor: 'gray.dark',
-					position: 'relative',
+					position: 'sticky',
 					overflowX: 'hidden',
 					height: '100vh',
 					'&::-webkit-scrollbar': {

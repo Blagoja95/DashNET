@@ -1,21 +1,26 @@
 package com.dashnet.dashNet.Task;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.dashnet.dashNet.User.User;
+import jakarta.persistence.*;
 
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "task")
 public class Task
 {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
+
 	private Long creatorId;
-	private Long assagneId;
+
+	@ManyToOne
+	@JoinColumn(name = "assagne_id")
+	private User assagnedUser;
+
 	private Long teamId;
 	private Long commentTbId;
 	private int status;
@@ -44,14 +49,14 @@ public class Task
 		this.creatorId = creatorId;
 	}
 
-	public Long getAssagneId()
+	public User getAssagnedUser()
 	{
-		return assagneId;
+		return assagnedUser;
 	}
 
-	public void setAssagneId(Long assagneId)
+	public void setAssagnedUser(User assagnedUser)
 	{
-		this.assagneId = assagneId;
+		this.assagnedUser = assagnedUser;
 	}
 
 	public Long getTeamId()
@@ -124,37 +129,13 @@ public class Task
 		this.description = description;
 	}
 
-	Task () {}
-
-	@Override
-	public boolean equals(Object o)
+	public Task()
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Task task = (Task) o;
-		return status == task.status && Objects.equals(id, task.id) && Objects.equals(creatorId, task.creatorId) && Objects.equals(assagneId, task.assagneId) && Objects.equals(teamId, task.teamId) && Objects.equals(commentTbId, task.commentTbId) && Objects.equals(createdDate, task.createdDate) && Objects.equals(deadlineDate, task.deadlineDate) && Objects.equals(title, task.title) && Objects.equals(description, task.description);
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, creatorId, assagneId, teamId, commentTbId, status, createdDate, deadlineDate, title, description);
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Task{" +
-			"id=" + id +
-			", creatorId=" + creatorId +
-			", assagneId=" + assagneId +
-			", teamId=" + teamId +
-			", commentTbId=" + commentTbId +
-			", status=" + status +
-			", createdDate=" + createdDate +
-			", deadlineDate=" + deadlineDate +
-			", title='" + title + '\'' +
-			", description='" + description + '\'' +
-			'}';
+		return Objects.hash(id, creatorId, assagnedUser.getId(), teamId, commentTbId, status, createdDate, deadlineDate, title, description);
 	}
 }
