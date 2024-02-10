@@ -10,7 +10,7 @@ const HomeController = () =>
 	const btoken = useSelector(state => state.user.btoken);
 	const nav = useNavigate();
 
-	const createTaskRedirect = () => nav('create/task?id=' + selectedTeam.id);
+	const createTaskRedirect = () => nav('tasks/create/' + selectedTeam.id);
 
 	const handeValChange = (e, val, reason) =>
 	{
@@ -20,7 +20,7 @@ const HomeController = () =>
 			dispatch(teamActions.setTeamStats(null));
 			dispatch(teamActions.setTeamTasks([]));
 		}
-	}
+	};
 
 	const getCount = async (teamId) =>
 	{
@@ -34,27 +34,12 @@ const HomeController = () =>
 				 }
 			 })
 			 .catch(e => dispatch(teamActions.setTeamStats(null)));
-	}
-
-	const getTasks = async (teamId) =>
-	{
-		axios.get('http://localhost:8080/tasks/team/' + (teamId ?? -1),
-			{ headers: {"Authorization" : `Bearer ${btoken}`} })
-			 .then(res =>
-			 {
-				 if (res.status === 200 && res.data.status)
-				 {
-					 dispatch(teamActions.setTeamTasks(res.data.data))
-				 }
-			 })
-			 .catch(e =>  dispatch(teamActions.setTeamTasks([])));
-	}
+	};
 
 	return {
 		createTaskRedirect,
 		handeValChange,
-		getCount,
-		getTasks
+		getCount
 	}
 }
 

@@ -31,7 +31,7 @@ public class UserService {
 	}
 
 
-	public ResponseEntity<UserResponse> getUser(Integer userId) {
+	public ResponseEntity<UserResponse> getUser(Long userId) {
 		User userById = userRepository.findUserById(userId);
 		if (userById == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User does not exist.", 0));
@@ -99,7 +99,7 @@ public class UserService {
 		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, userByEmail, 1));
 	}
 
-	public ResponseEntity<UserResponse> deleteUser(Integer userId) {
+	public ResponseEntity<UserResponse> deleteUser(Long userId) {
 		boolean exists = userRepository.existsById(userId);
 
 		if (!exists)
@@ -111,7 +111,7 @@ public class UserService {
 
 	}
 
-	public ResponseEntity<UserResponse> updateUser(Integer userId, User user) {
+	public ResponseEntity<UserResponse> updateUser(Long userId, User user) {
 		User userById = userRepository.findUserById(userId);
 
 		if (userById == null) {

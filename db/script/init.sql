@@ -138,6 +138,9 @@ CREATE TABLE IF NOT EXISTS user (
 	password VARCHAR(255) NOT NULL
 );
 
+-- special, admins, ...
+INSERT INTO user (id, email, fname, lname, password) VALUES (-1,'admin','admin','admin','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
+
 -- back end team
 INSERT INTO user (id, email, fname, lname, password) VALUES (100,'janko.jankovic@beDev.com','Janko','Jankovic','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');
 INSERT INTO user (id, email, fname, lname, password) VALUES (200,'marko.markovic@beDev.com','Marko','Markovic','$2a$10$R.3fPs3S2Qrl/oVAi/.0geWQ7emUcysurOqDsaqk1vd0gmoRJUmuq');

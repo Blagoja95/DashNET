@@ -11,6 +11,7 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 	const dispatch = useDispatch();
 	const refUser = useRef(null);
 	const open = useSelector(state => state.ui.userMenuOpen);
+
 	return <Box
 		sx={ {
 			p: '1rem',

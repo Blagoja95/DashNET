@@ -15,7 +15,7 @@ public class TaskService
 	{
 		Task t = new Task();
 
-		t.setAssagneId(Long.valueOf(ReqMap.getOrDefault("assagneid", "0")));
+//		t.setAssagneId(Long.valueOf(ReqMap.getOrDefault("assagneid", "0")));
 		t.setCommentTbId(0L); // TODO: to be created
 		t.setDescription(ReqMap.getOrDefault("description", "empty description"));
 		t.setTitle(ReqMap.getOrDefault("title", "empty title"));

@@ -1,16 +1,27 @@
 package com.dashnet.dashNet.User;
 
+import com.dashnet.dashNet.Task.Task;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Set;
+
 @SuppressWarnings("unused")
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Table(name = "user")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@Column(name = "id")
+	private Long id;
+
+	@OneToMany(mappedBy = "assagnedUser")
+	private Set<Task> tasks;
+
 	@NotNull(message = "First Name is required")
 	private String fname;
 	@NotNull(message = "Last Name is required")
@@ -19,10 +30,10 @@ public class User {
 	private String email;
 	@NotNull(message = "Password is required")
 	private String password;
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFname() {
