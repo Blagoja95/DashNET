@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+	loadedTask: null,
 	statusDefinition: {
 		0: {
 			name: 'Not started',
@@ -25,7 +26,10 @@ const taskSlice = createSlice({
 	name: 'task',
 	initialState,
 	reducers: {
-
+		setTask(state, action)
+		{
+			state.loadedTask = action.payload;
+		}
 	}
 });
 

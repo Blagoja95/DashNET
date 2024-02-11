@@ -22,19 +22,19 @@ CREATE TABLE IF NOT EXISTS task (
 -- Init data for back end team
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 100, 0, 100, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create users sql', 'Create SQL script for users. This script will be copied inside initdb folder');
+	(1000, 100, 0, 200, 0, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create users sql', 'Create SQL script for users. This script will be copied inside initdb folder');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 100, 0, 100, 1, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create teams sql', 'Create SQL script for teams. This script will be copied inside initdb folder');
+	(1000, 100, 0, 200, 1, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create teams sql', 'Create SQL script for teams. This script will be copied inside initdb folder');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 100, 0, 100, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create tasks sql', 'Create SQL script for tasks. This script will be copied inside initdb folder');
+	(1000, 100, 0, 200, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create tasks sql', 'Create SQL script for tasks. This script will be copied inside initdb folder');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 100, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init mysql dashnetdb', 'Done');
+	(1000, 200, 0, 200, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Init mysql dashnetdb', 'Done');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
@@ -46,7 +46,7 @@ VALUES
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 200, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create spring docker image ', 'Docker file with image build flow. Hot-reload will need a bit of additional research.');
+	(1000, 100, 0, 200, 3, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'Create spring docker image ', 'Docker file with image build flow. Hot-reload will need a bit of additional research.');
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
@@ -58,7 +58,7 @@ VALUES
 
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)
 VALUES
-	(1000, 200, 0, 200, 2, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'React service sometimes fails on win platform', '?');
+	(1000, 100, 0, 200, 2, NOW(), NOW() + INTERVAL FLOOR(RAND() * 30) DAY, 'React service sometimes fails on win platform', '?');
 
 -- Init data for technical documentation team
 INSERT INTO task (creator_id, assagne_id, comment_tb_id, team_id, status, created_date, deadline_date, title, description)

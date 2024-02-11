@@ -42,7 +42,7 @@ public class TaskController
 		return taskService.returnOkResponse(false, "", 1, true, taskService.countTasks(taskRepository, teamID));
 	}
 
-	@GetMapping(path = "/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Map<String, Object>> getOne(@PathVariable Long id)
 	{
 		Task a = taskRepository

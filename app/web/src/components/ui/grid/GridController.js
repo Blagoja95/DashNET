@@ -13,7 +13,6 @@ const HomeController = () =>
 	const btoken = useSelector(state => state.user.btoken);
 	const status = useSelector(state => state.task.statusDefinition);
 
-
 	const getData = async (teamId) =>
 	{
 		axios.get('http://localhost:8080/tasks/team/' + ( teamId ?? -1 ),
@@ -28,7 +27,7 @@ const HomeController = () =>
 			 .catch(e => dispatch(teamActions.setTeamTasks([])));
 	};
 
-	const _handleClick = (id) => nav('tasks/' + id);
+	const _handleClick = (id) => nav('task/' + id);
 
 	const changeStatus = (e, id) =>
 	{
