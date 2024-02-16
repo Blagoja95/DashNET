@@ -1,6 +1,6 @@
-import { teamActions } from '../../../store/slices/teamSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {teamActions} from '../../../store/slices/teamSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const HomeController = () =>
@@ -14,7 +14,7 @@ const HomeController = () =>
 
 	const handeValChange = (e, val, reason) =>
 	{
-		if ( reason === 'selectOption' )
+		if (reason === 'selectOption' && selectedTeam.id !== val.id)
 		{
 			dispatch(teamActions.setSelectedTeam(val));
 			dispatch(teamActions.setTeamStats(null));
@@ -25,15 +25,15 @@ const HomeController = () =>
 	const getCount = async (teamId) =>
 	{
 		axios.get('http://localhost:8080/tasks/count/' + (teamId ?? -1),
-			{ headers: {"Authorization" : `Bearer ${btoken}`} })
-			 .then(res =>
-			 {
-				 if (res.status === 200 && res.data.status)
-				 {
-					 dispatch(teamActions.setTeamStats(res.data.data))
-				 }
-			 })
-			 .catch(e => dispatch(teamActions.setTeamStats(null)));
+			{headers: {"Authorization": `Bearer ${btoken}`}})
+			.then(res =>
+			{
+				if (res.status === 200 && res.data.status)
+				{
+					dispatch(teamActions.setTeamStats(res.data.data))
+				}
+			})
+			.catch(e => dispatch(teamActions.setTeamStats(null)));
 	};
 
 	return {

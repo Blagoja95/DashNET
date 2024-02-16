@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { teamActions } from '../../../store/slices/teamSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Chip, TableCell, TableRow } from '@mui/material';
+import { Box, TableCell, TableRow } from '@mui/material';
 import UserAvatar from '../avatar/UserAvatar';
 import { useNavigate } from 'react-router-dom';
+import TaskStatusChip from '../chip/TaskStatusChip';
 
 const HomeController = () =>
 {
@@ -11,7 +12,6 @@ const HomeController = () =>
 	const dispatch = useDispatch();
 
 	const btoken = useSelector(state => state.user.btoken);
-	const status = useSelector(state => state.task.statusDefinition);
 
 	const getData = async (teamId) =>
 	{
@@ -28,28 +28,6 @@ const HomeController = () =>
 	};
 
 	const _handleClick = (id) => nav('task/' + id);
-
-	const changeStatus = (e, id) =>
-	{
-		e.stopPropagation();
-
-		axios.patch('http://localhost:8080/tasks/update/status/ow',
-			JSON.stringify({ id: id }),
-			{
-				headers: {
-					'Authorization': `Bearer ${ btoken }`,
-					'Content-Type': 'application/json'
-				}
-			})
-			 .then(res =>
-			{
-				if (res.status === 200 && res.data.status)
-				{
-					dispatch(teamActions.setTaskStatus(res.data.data));
-				}
-			})
-			 .catch(e => console.warn(e));
-	}
 
 	const _checkGridType = (input) =>
 	{
@@ -131,14 +109,7 @@ const HomeController = () =>
 
 				<TableCell align='left'
 							onClick={e => e.stopPropagation()}>
-					<Chip color={ status[row.status].color }
-						  label={ status[row.status].name }
-						  id={'status-chip-id-' + row?.id}
-						  sx={ {
-							  width: 100
-						  } }
-						  onClick={(e)=> changeStatus(e, row?.id ?? -1)}
-					/>
+					<TaskStatusChip btoken={btoken} id={row?.id} statusVal={row.status}/>
 				</TableCell>
 
 				<TableCell>
@@ -171,8 +142,7 @@ const HomeController = () =>
 	return {
 		getData,
 		getTableHeader,
-		getTableRows,
-		changeStatus
+		getTableRows
 	};
 };
 

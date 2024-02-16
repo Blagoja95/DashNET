@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {taskAction} from '../slices/taskSlice';
+import {taskActions} from '../slices/taskSlice';
 
 export const getTaskDetails = (id, tkn) =>
 {
@@ -7,7 +7,7 @@ export const getTaskDetails = (id, tkn) =>
 	{
 		if (!id)
 		{
-			dispatch(taskAction.setTask(null));
+			dispatch(taskActions.setTask(null));
 
 			return;
 		}
@@ -18,17 +18,74 @@ export const getTaskDetails = (id, tkn) =>
 			{
 				if (res.status === 200 && res.data.status)
 				{
-					dispatch(taskAction.setTask(res.data.data));
+					dispatch(taskActions.setTask(res.data.data));
 				} else
 				{
-					dispatch(taskAction.setTask(null));
+					dispatch(taskActions.setTask(null));
 				}
 			})
 			.catch(e =>
 			{
-				dispatch(taskAction.setTask(null));
+				dispatch(taskActions.setTask(null));
 
 				console.warn(e);
+			});
+	}
+}
+
+export const updateTaskValuePatch = (tkn, id, property, value) =>
+{
+	const uo = {id: id};
+	uo[property] = value;
+
+	return (dispatch) =>
+	{
+		axios.patch('http://localhost:8080/tasks/update/' + property,
+			JSON.stringify(uo),
+			{
+				headers: {
+					'Authorization': `Bearer ${tkn}`,
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(res =>
+			{
+				if (res.status === 200 && res.data.status)
+				{
+					dispatch(taskActions.updateTaskPatch([property, res.data.data[property]]));
+				}
+			})
+			.catch(e =>
+			{
+				console.warn(e)
+			});
+	}
+}
+
+export const deleteTask = (tkn, id, nav) =>
+{
+	return (dispatch) =>
+	{
+		axios.delete('http://localhost:8080/tasks/delete',
+			{
+				data: JSON.stringify({id: id}),
+				headers: {
+					'Authorization': `Bearer ${tkn}`,
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(res =>
+			{
+				if (res.status === 200 && res.data.status)
+				{
+					nav('/');
+
+					dispatch(taskActions.setTask(null));
+				}
+			})
+			.catch(e =>
+			{
+				console.warn(e)
 			});
 	}
 }

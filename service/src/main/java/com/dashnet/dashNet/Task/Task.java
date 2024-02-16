@@ -15,7 +15,9 @@ public class Task
 	@Column(name = "id")
 	private Long id;
 
-	private Long creatorId;
+	@ManyToOne
+	@JoinColumn(name = "creator_id")
+	private User creatorUser;
 
 	@ManyToOne
 	@JoinColumn(name = "assagne_id")
@@ -28,6 +30,7 @@ public class Task
 	private Date deadlineDate;
 	private String title;
 	private String description;
+	private String ttype;
 
 	public Long getId()
 	{
@@ -39,16 +42,6 @@ public class Task
 		this.id = id;
 	}
 
-	public Long getCreatorId()
-	{
-		return creatorId;
-	}
-
-	public void setCreatorId(Long creatorId)
-	{
-		this.creatorId = creatorId;
-	}
-
 	public User getAssagnedUser()
 	{
 		return assagnedUser;
@@ -57,6 +50,15 @@ public class Task
 	public void setAssagnedUser(User assagnedUser)
 	{
 		this.assagnedUser = assagnedUser;
+	}
+	public User getCreatorUser()
+	{
+		return creatorUser;
+	}
+
+	public void setCreatorUser(User creatorUser)
+	{
+		this.creatorUser = creatorUser;
 	}
 
 	public Long getTeamId()
@@ -129,6 +131,16 @@ public class Task
 		this.description = description;
 	}
 
+	public String getTtype()
+	{
+		return ttype;
+	}
+
+	public void setTtype(String ttype)
+	{
+		this.ttype = ttype;
+	}
+
 	public Task()
 	{
 	}
@@ -136,6 +148,6 @@ public class Task
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, creatorId, assagnedUser.getId(), teamId, commentTbId, status, createdDate, deadlineDate, title, description);
+		return Objects.hash(id, creatorUser.getId(), assagnedUser.getId(), teamId, commentTbId, status, createdDate, deadlineDate, title, description);
 	}
 }
