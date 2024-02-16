@@ -20,14 +20,18 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/lab": "^5.0.0-alpha.165",
     "@mui/material": "^5.15.10",
+    "@mui/x-date-pickers": "^6.19.4",
     "@reduxjs/toolkit": "^2.0.1",
+    "@uiw/react-md-editor": "^4.0.3",
     "axios": "^1.6.5",
+    "dayjs": "^1.11.10",
     "react": "^18.2.0",
     "react-cookie": "^7.0.2",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.1",
     "react-router-dom": "^6.20.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "rehype-sanitize": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

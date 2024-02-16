@@ -56,8 +56,8 @@ services:
     deploy:
       mode: replicated
       replicas: ${NODE_REPLICAS}
-#    volumes:
-#      - './src/main/ui/src:/app/src' TODO: Volumes problem on Windows machine
+    volumes:
+      - './app/web/src:/app/src'
     environment:
       - FAST_REFRESH=false
       - WDS_SOCKET_PORT=${NODE_PORT}

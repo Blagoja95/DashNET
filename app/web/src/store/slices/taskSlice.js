@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
 	loadedTask: null,
+	taskId: null,
 	statusDefinition: {
 		0: {
 			name: 'Not started',
@@ -29,10 +30,25 @@ const taskSlice = createSlice({
 		setTask(state, action)
 		{
 			state.loadedTask = action.payload;
+		},
+		updateTaskPatch(state, action)
+		{
+			state.loadedTask[action.payload[0]] = action.payload[1];
+		},
+		setTaskId(state, action)
+		{
+			state.taskId = action.payload;
+		},
+		updatedLoadedTask(state, action)
+		{
+			if (state.loadedTask !== null)
+			{
+				state.loadedTask[action.payload[0]] = action.payload[1];
+			}
 		}
 	}
 });
 
 export default taskSlice;
 
-export const taskAction = taskSlice.actions;
+export const taskActions = taskSlice.actions;

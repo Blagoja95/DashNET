@@ -14,21 +14,21 @@ const Settings = () => {
 			<Tabs
 				value={tabIdx}
 				onChange={(_e, newValue) => setTabIdx(newValue)}
-				sx={{ my: 5, borderBottom: 2, borderColor: 'grey.light' }}
+				sx={{ my: 5, borderBottom: 1, borderColor: 'divider'}}
 				indicatorColor='none'>
 				<Tab
 					label='User Information'
 					aria-controls={`simple-tabpanel-${tabIdx}`}
 					sx={{
 						'&.Mui-selected':
-							{ bgcolor: 'grey.light', color: 'white.light', borderTopLeftRadius: 5, borderTopRightRadius: 5 }
+							{  borderTopLeftRadius: 5, borderTopRightRadius: 5, borderBottom: 2 }
 					}} />
 				<Tab
 					label='Change Password'
 					aria-controls={`simple-tabpanel-${tabIdx}`}
 					sx={{
 						'&.Mui-selected':
-							{ bgcolor: 'grey.light', color: 'white.light', borderTopLeftRadius: 5, borderTopRightRadius: 5 }
+							{ borderTopLeftRadius: 5, borderTopRightRadius: 5, borderBottom: 2 }
 					}} />
 			</Tabs>
 			<Box component='div' role='tabpanel' hidden={tabIdx !== 0} sx={{ mx: '10%' }}>

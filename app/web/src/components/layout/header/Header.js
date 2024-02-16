@@ -6,7 +6,7 @@ import { uiActions } from '../../../store/slices/uiSlice';
 import { useRef } from 'react';
 import UserMenu from './menu/UserMenu';
 
-const Header = ({ titleTxt, subtitleTxt }) =>
+const Header = ({ titleTxt, subtitleTxt, onClick, onBlur }) =>
 {
 	const dispatch = useDispatch();
 	const refUser = useRef(null);
@@ -25,13 +25,15 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 				justifyContent: 'space-between'
 			} }>
 
-			<Typography variant='h3'
-						sx={ {
-							fontWeight: 'bold'
-						} }>
-
-				{ titleTxt?.length > 0 ? titleTxt : 'Dashboard' }
-			</Typography>
+			{/*<Tooltip title={titleTxt} placement={'bottom-start'}>*/}
+				<Typography variant={'h3'} onClick={onClick} onBlur={onBlur} noWrap
+							sx={{
+								fontWeight: 'bold',
+								maxWidth: 900
+							}}>
+					{titleTxt}
+				</Typography>
+			{/*</Tooltip>*/}
 
 			<Box
 				sx={ {
@@ -42,8 +44,7 @@ const Header = ({ titleTxt, subtitleTxt }) =>
 				<Tooltip title={'Press CTRL + / to open search window'}>
 					<Button
 						onClick={ () => dispatch(uiActions.setSearchOpen(true)) }>
-						<SearchIcon
-							color={ 'primary' }
+						<SearchIcon color={ 'primary' }
 							sx={ {
 								cursor: 'pointer'
 							} }/>

@@ -22,6 +22,9 @@ public class User {
 	@OneToMany(mappedBy = "assagnedUser")
 	private Set<Task> tasks;
 
+	@OneToMany(mappedBy = "creatorUser")
+	private Set<Task> ctasks;
+
 	@NotNull(message = "First Name is required")
 	private String fname;
 	@NotNull(message = "Last Name is required")

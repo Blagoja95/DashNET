@@ -58,7 +58,7 @@ public class TaskController
 		List<Task> a = taskRepository
 			.findByTeamId(teamId);
 
-		if(a.isEmpty())
+		if (a.isEmpty())
 		{
 			throw new TaskGenericException("No tasks found for selected team!");
 		}
@@ -102,32 +102,36 @@ public class TaskController
 	@PutMapping("/update")
 	public ResponseEntity<Map<String, Object>> updateTask(Task nTask, @RequestParam Long id)
 	{
-		return taskRepository
-			.findById(id)
-			.map(tsk ->
-			{
-				nTask.setId(tsk.getId());
-
-				taskRepository.save(nTask);
-
-				return taskService.returnOkResponse(true, "Task updated successfully!", 1, true, nTask.getId());
-			})
-			.orElseThrow(() -> new TaskNotFoundException(id));
+		return taskService.updateTaskPatch(taskRepository, nTask, "update-all");
 	}
 
-	@PatchMapping("update/status/ow")
+	@PatchMapping("/update/status/ow")
 	public ResponseEntity<Map<String, Object>> updateOneWay(@RequestBody Task ob)
 	{
-		return taskRepository
-			.findById(ob.getId())
-			.map(tsk ->
-			{
-				tsk.setStatus(tsk.getStatus() >= 3 ? 0 : tsk.getStatus() + 1);
+		return taskService.updateTaskPatch(taskRepository, ob, "status-ow");
+	}
 
-				taskRepository.save(tsk);
+	@PatchMapping("/update/description")
+	public ResponseEntity<Map<String, Object>> updateDescription(@RequestBody Task ob)
+	{
+		return taskService.updateTaskPatch(taskRepository, ob, "description");
+	}
 
-				return taskService.returnOkResponse(true, "Task status changed successfully!", 1, true, tsk);
-			})
-			.orElseThrow(() -> new TaskNotFoundException(ob.getId()));
+	@PatchMapping("/update/title")
+	public ResponseEntity<Map<String, Object>> updateTitle(@RequestBody Task ob)
+	{
+		return taskService.updateTaskPatch(taskRepository, ob, "title");
+	}
+
+	@PatchMapping("/update/deadlineDate")
+	public ResponseEntity<Map<String, Object>> updateDeadline(@RequestBody Task ob)
+	{
+		return taskService.updateTaskPatch(taskRepository, ob, "deadline");
+	}
+
+	@PatchMapping("/update/ttype")
+	public ResponseEntity<Map<String, Object>> updateTtype(@RequestBody Task ob)
+	{
+		return taskService.updateTaskPatch(taskRepository, ob, "ttype");
 	}
 }
