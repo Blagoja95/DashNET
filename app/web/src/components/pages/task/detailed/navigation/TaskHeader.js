@@ -1,8 +1,8 @@
-import Header from '../../../layout/header/Header';
+import Header from '../../../../layout/header/Header';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState} from 'react';
 import {TextField} from '@mui/material';
-import {updateTaskValuePatch} from '../../../../store/controllers/taskController';
+import {updateTaskValuePatch} from '../../../../../store/controllers/taskController';
 
 const TaskHeader = () =>
 {

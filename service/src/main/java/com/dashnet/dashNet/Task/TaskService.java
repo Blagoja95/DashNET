@@ -10,9 +10,7 @@ import java.util.Map;
 
 public class TaskService
 {
-	TaskService()
-	{
-	}
+	TaskService() {}
 
 	protected Task createTask(HashMap<String, String> ReqMap)
 	{
@@ -38,7 +36,7 @@ public class TaskService
 
 		if (teamID != -1)
 		{
-			a = taskRepository.findByTeamId(teamID);
+			a = taskRepository.findByTeamId(teamID, Task.class);
 		} else
 		{
 			a = (List<Task>) taskRepository.findAll();
@@ -59,9 +57,7 @@ public class TaskService
 				case 1 -> inProgress++;
 				case 2 -> review++;
 				case 3 -> done++;
-				default ->
-				{
-				}
+				default -> {}
 			}
 		}
 

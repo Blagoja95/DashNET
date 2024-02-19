@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
-import {getTaskDetails} from '../../../store/controllers/taskController';
+import {getTaskDetails} from '../../../../store/controllers/taskController';
 import TabNavigation from './navigation/TabNavigation';
-import {taskActions} from '../../../store/slices/taskSlice';
+import {taskActions} from '../../../../store/slices/taskSlice';
 import TaskHeader from './navigation/TaskHeader';
 
 const Task = () =>

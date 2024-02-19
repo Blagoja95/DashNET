@@ -10,7 +10,7 @@ import Settings from './components/pages/settings/Settings';
 import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
 import HandleSession from './components/pages/auth/HandleSession';
-import Task from './components/pages/task/Task';
+import Task from './components/pages/task/detailed/Task';
 
 const App = () =>
 {

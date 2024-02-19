@@ -1,5 +1,5 @@
 import {TableCell, TableRow} from '@mui/material';
-import UserAvatar from '../../../../ui/avatar/UserAvatar';
+import UserAvatar from '../../../../../ui/avatar/UserAvatar';
 
 const AssigneeRow = ({task}) =>
 {

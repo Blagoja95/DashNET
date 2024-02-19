@@ -141,9 +141,7 @@ public class Task
 		this.ttype = ttype;
 	}
 
-	public Task()
-	{
-	}
+	public Task() {}
 
 	@Override
 	public int hashCode()

@@ -1,7 +1,7 @@
 import {TableCell, TableRow, TextField} from '@mui/material';
 import {useDispatch} from 'react-redux';
 import {useState} from 'react';
-import {updateTaskValuePatch} from '../../../../../store/controllers/taskController';
+import {updateTaskValuePatch} from '../../../../../../store/controllers/taskController';
 
 const TypeRow = ({tkn, task, id}) =>
 {

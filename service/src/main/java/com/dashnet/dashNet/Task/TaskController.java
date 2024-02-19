@@ -2,6 +2,8 @@ package com.dashnet.dashNet.Task;
 
 import com.dashnet.dashNet.Task.Exceptions.TaskGenericException;
 import com.dashnet.dashNet.Task.Exceptions.TaskNotFoundException;
+import com.dashnet.dashNet.Task.Projections.ShortTasksProjection;
+import com.dashnet.dashNet.Task.Projections.StoreTaskProjection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,8 +57,8 @@ public class TaskController
 	@GetMapping("/team/{teamId}")
 	public ResponseEntity<Map<String, Object>> getByTeam(@PathVariable Long teamId)
 	{
-		List<Task> a = taskRepository
-			.findByTeamId(teamId);
+		List<ShortTasksProjection> a = taskRepository
+			.findByTeamId(teamId, ShortTasksProjection.class);
 
 		if (a.isEmpty())
 		{
@@ -69,13 +71,13 @@ public class TaskController
 	@GetMapping("title/{param}")
 	public ResponseEntity<Map<String, Object>> getByTitle(@PathVariable String param)
 	{
-		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByTitleContaining(param));
+		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByTitleContaining(param, StoreTaskProjection.class));
 	}
 
 	@GetMapping("description/{param}")
 	public ResponseEntity<Map<String, Object>> getByDescription(@PathVariable String param)
 	{
-		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByDescriptionContaining(param));
+		return taskService.returnOkResponse(false, "", 1, true, taskRepository.findByDescriptionContaining(param, StoreTaskProjection.class));
 	}
 
 	@PostMapping(path = "/create")
