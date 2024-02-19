@@ -5,7 +5,7 @@ import AssigneeRow from './row/AssigneeRow';
 import TypeRow from './row/TypeRow';
 import DeadlineRow from './row/DeadlineRow';
 import StatusRow from './row/StatusRow';
-import {deleteTask} from '../../../../store/controllers/taskController';
+import {deleteTask} from '../../../../../store/controllers/taskController';
 import {useNavigate} from 'react-router-dom';
 
 const TaskOverview = () =>

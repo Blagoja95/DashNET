@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import {useDispatch} from 'react-redux';
 import {TableCell, TableRow} from '@mui/material';
 import {useState} from 'react';
-import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
+import 'dayjs/locale/en-gb';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {updateTaskValuePatch} from '../../../../../store/controllers/taskController';
+import {updateTaskValuePatch} from '../../../../../../store/controllers/taskController';
 
 const DeadlineRow = ({task, id, tkn}) =>
 {
@@ -15,8 +15,8 @@ const DeadlineRow = ({task, id, tkn}) =>
 
 	const handleChange = (nval) =>
 	{
-		console.log(`${nval.$y}-${nval.$M < 10 ? '0' + nval.$M : nval.$M}-${nval.$D < 10 ? '0' + nval.$M : nval.$M}`)
-		dispatch(updateTaskValuePatch(tkn, id, 'deadlineDate', `${nval.$y}-${nval.$M}-${nval.$D}`));
+		dispatch(updateTaskValuePatch(tkn, id, 'deadlineDate'
+			, `${nval.$y}-${nval.$M < 10 ? '0' + (nval.$M + 1): (nval.$M + 1)}-${nval.$D < 10 ? '0' + nval.$D : nval.$D}`));
 
 		setValue(nval);
 	}
@@ -26,10 +26,8 @@ const DeadlineRow = ({task, id, tkn}) =>
 			Deadline
 		</TableCell>
 		<TableCell>
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<DemoContainer components={['DatePicker']}>
-					<DatePicker label="Basic date picker" value={value} onChange={handleChange}/>
-				</DemoContainer>
+			<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en-gb'}>
+					<DatePicker value={value} onChange={handleChange}/>
 			</LocalizationProvider>
 		</TableCell>
 	</TableRow>

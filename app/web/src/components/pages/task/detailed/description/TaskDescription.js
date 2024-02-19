@@ -3,7 +3,7 @@ import {Box} from '@mui/material';
 import {useRef, useState} from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 import MDEditor, {commands} from '@uiw/react-md-editor';
-import {updateTaskValuePatch} from '../../../../store/controllers/taskController';
+import {updateTaskValuePatch} from '../../../../../store/controllers/taskController';
 
 const TaskDescription = () =>
 {

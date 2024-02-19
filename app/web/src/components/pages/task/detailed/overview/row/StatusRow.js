@@ -1,5 +1,5 @@
 import {TableCell, TableRow} from '@mui/material';
-import TaskStatusChip from '../../../../ui/chip/TaskStatusChip';
+import TaskStatusChip from '../../../../../ui/chip/TaskStatusChip';
 
 const StatusRow = ({id, statusVal, tkn}) =>
 {
