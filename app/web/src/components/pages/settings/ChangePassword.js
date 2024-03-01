@@ -23,10 +23,11 @@ const ChangePassword = () => {
 				<InputGroup label='New Password Confirm' type='password' inpRef={el => inputsRef.current.newPwConfirm = el} />
 			</Box>
 			<Button
-				sx={{
-					bgcolor: 'white.main', color: 'grey.main', px: 2, mt: 2,
-					borderRadius: 1, ":hover": { bgcolor: 'white.light' }
-				}} onClick={onChangePassword}>Change Password</Button>
+				variant={'contained'}
+				sx={{ px: 2, mt: 2, borderRadius: 1 }}
+				onClick={onChangePassword}>
+				Change Password
+			</Button>
 		</Box>
 	)
 }

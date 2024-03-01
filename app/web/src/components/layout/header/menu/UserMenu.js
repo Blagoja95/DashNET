@@ -29,25 +29,18 @@ const UserMenu = ({ refP, open }) =>
 		handleClose();
 	};
 
-	const handleSettings = () =>
+	const handleReroute = (rout) =>
 	{
-		nav('/settings');
-
-		handleClose();
-	};
-
-	const handleAddNewAcc = () =>
-	{
-		nav('/nusers'); //TOOD
+		nav(rout);
 
 		handleClose();
 	}
 
 	const items = [
-		{fn: handleClose, txt: 'Create new team', icon: <GroupAdd fontSize='small'/>},
-		{fn: handleAddNewAcc, txt: 'Create new user', icon: <PersonAdd fontSize='small'/>},
-		{fn: handleClose, txt: 'Create new task', icon: <AddTask fontSize='small'/>},
-		{fn: handleSettings, txt: 'Settings', icon: <Settings fontSize='small'/>},
+		{fn: handleReroute.bind(null, '/nteam'), txt: 'Create new team', icon: <GroupAdd fontSize='small'/>},
+		{fn: handleReroute.bind(null, '/nuser'), txt: 'Create new user', icon: <PersonAdd fontSize='small'/>},
+		{fn: handleReroute.bind(null, '/ntask'), txt: 'Create new task', icon: <AddTask fontSize='small'/>},
+		{fn: handleReroute.bind(null, '/settings'), txt: 'Settings', icon: <Settings fontSize='small'/>},
 		{fn: handleLogout, txt: 'Logout', icon: <Logout fontSize='small'/>},]
 
 	return <Menu
