@@ -1,5 +1,8 @@
 package com.dashnet.dashNet.Task;
 
+import com.dashnet.dashNet.Task.Exceptions.TaskGenericException;
+import com.dashnet.dashNet.User.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import com.dashnet.dashNet.Task.Exceptions.TaskNotFoundException;
 
@@ -12,21 +15,30 @@ public class TaskService
 {
 	TaskService() {}
 
-	protected Task createTask(HashMap<String, String> ReqMap)
+	protected Task createTask(Map<String, String> ReqMap, TaskRepository taskRepository)
 	{
 		Task t = new Task();
+		User u = new User();
 
-//		t.setAssagneId(Long.valueOf(ReqMap.getOrDefault("assagneid", "0")));
-		t.setCommentTbId(0L); // TODO: to be created
-		t.setDescription(ReqMap.getOrDefault("description", "empty description"));
-		t.setTitle(ReqMap.getOrDefault("title", "empty title"));
-		t.setStatus(Integer.parseInt(ReqMap.getOrDefault("status", "0")));
+		u.setId(Long.valueOf(ReqMap.get("userid")));
+
+		t.setCreatorUser(u);
+		t.setAssagnedUser(u);
 		t.setTeamId(Long.valueOf(ReqMap.getOrDefault("teamid", "0")));
-//		t.setCreatorId(Long.valueOf(ReqMap.getOrDefault("createid", "0")));
+		t.setDescription(ReqMap.getOrDefault("description", "Empty description"));
+		t.setTitle(ReqMap.getOrDefault("title", "Empty title"));
+		t.setTtype(ReqMap.getOrDefault("ttype", "New"));
+
+		t.setCommentTbId(0L); // TODO: to be created
+		t.setStatus(0);
 		t.setCreatedDate(Date.valueOf(java.time.LocalDate.now()));
 		t.setDeadlineDate(Date.valueOf(java.time.LocalDate.now().plusMonths(1)));
 
-		return t;
+		try {
+			return taskRepository.save(t);
+		} catch (DataAccessException e) {
+			throw new TaskGenericException("Something went wrong. Could not create new task!");
+		}
 	}
 
 	protected HashMap<String, Integer> countTasks(TaskRepository taskRepository, Long teamID)

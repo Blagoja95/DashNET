@@ -11,6 +11,7 @@ import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
 import HandleSession from './components/pages/auth/HandleSession';
 import Task from './components/pages/task/detailed/Task';
+import CreateTask from './components/pages/task/create/CreateTask';
 
 const App = () =>
 {
@@ -54,6 +55,7 @@ const App = () =>
 					<Route path='/settings' element={activeUser ? <Settings /> : <Login />} />
 					<Route path='/auth/login' element={activeUser ? <Home /> : <Login />} />
 					<Route path='/auth/register' element={activeUser ? <Home /> : <Register />} />
+					<Route path='/ntask' element={activeUser ? <CreateTask /> : <Login />} />
 					<Route path='/' element={activeUser ? <div>Test</div> : <Login />} />
 					<Route path='*' element={activeUser ? <section>404 TODO</section> : <Login />} />
 				</Routes>

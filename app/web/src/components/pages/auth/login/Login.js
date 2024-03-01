@@ -35,7 +35,8 @@ const Login = () => {
 				<InputGroup label="Email" type="email" inpRef={el => loginRef.current.email = el} />
 				<InputGroup label="Password" type="password" inpRef={el => loginRef.current.password = el} />
 				<Button type='submit'
-					sx={{ bgcolor: 'white.main', color: 'grey.main', ":hover": { bgcolor: 'white.light', color: 'grey.dark' }, p: 1, my: 3, width: '100%', borderRadius: 1 }}
+					variant={'contained'}
+					sx={{ p: 1, my: 3, width: '100%', borderRadius: 1 }}
 					onClick={loginHandler}>
 					Login
 				</Button>

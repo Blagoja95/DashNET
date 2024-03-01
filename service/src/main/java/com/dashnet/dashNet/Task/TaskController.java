@@ -81,11 +81,9 @@ public class TaskController
 	}
 
 	@PostMapping(path = "/create")
-	public ResponseEntity<Map<String, Object>> createTask(@RequestParam HashMap<String, String> ReqMap)
+	public ResponseEntity<Map<String, Object>> createTask(@RequestBody Map<String, String> ReqMap)
 	{
-		Task t = taskRepository.save(taskService.createTask(ReqMap));
-
-		return taskService.returnOkResponse(true, "Task created successfully!", 1, true, t);
+		return taskService.returnOkResponse(true, "Task created successfully!", 1, true, taskService.createTask(ReqMap, taskRepository));
 	}
 
 	@DeleteMapping(path = "/delete")

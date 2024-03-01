@@ -10,7 +10,7 @@ const HomeController = () =>
 	const btoken = useSelector(state => state.user.btoken);
 	const nav = useNavigate();
 
-	const createTaskRedirect = () => nav('tasks/create/' + selectedTeam.id);
+	const createTaskRedirect = () => nav('/ntask');
 
 	const handeValChange = (e, val, reason) =>
 	{

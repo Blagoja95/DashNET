@@ -50,8 +50,9 @@ const Register = () => {
 					<InputGroup label="Confirm Password" type="password" placeholder="Please confirm your password" inpRef={el => registerRef.current.passwordConfirm = el} />
 				</Box>
 				<Button type='submit'
-					sx={{ bgcolor: 'white.main', color: 'grey.main', ":hover": { bgcolor: 'white.light', color: 'grey.dark' }, p: 1, my: 3, width: '100%', borderRadius: 1 }}
-					onClick={registerHandler}>
+						sx={{p: 1, my: 3, width: '100%', borderRadius: 1}}
+						variant={'contained'}
+						onClick={registerHandler}>
 					Register
 				</Button>
 				<Typography>Already have an account?{' '}

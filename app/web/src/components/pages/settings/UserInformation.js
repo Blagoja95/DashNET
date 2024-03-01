@@ -45,10 +45,11 @@ const UserInformation = () => {
 
 
 			<Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-				<Button sx={{
-					bgcolor: 'white.main', color: 'grey.main', px: 2, mt: 2,
-					borderRadius: 1, ":hover": { bgcolor: 'white.light' }
-				}} onClick={onSave}>Save Changes</Button>
+				<Button sx={{ px: 2, mt: 2, borderRadius: 1}}
+						onClick={onSave}
+						variant={'contained'}>
+					Save Changes
+				</Button>
 				<Button sx={{bgcolor: 'error.dark', color: 'white.light', px: 2, mt: 2, borderRadius: 1, ":hover": {bgcolor: 'error.main'}}} onClick={onDelete}>Delete Account</Button>
 			</Box>
 		</Box>
