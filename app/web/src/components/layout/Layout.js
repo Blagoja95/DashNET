@@ -1,22 +1,20 @@
-import { Box } from "@mui/material";
-
-import { useSelector } from "react-redux";
+import { Box } from '@mui/material';
 
 import Navigation from "./navigation/Navigation";
-import Search from './search/Search';
+import Search from './header/search/Search';
 import Header from "./header/Header";
 
-const Layout = ({ children }) => {
-    const activeUser = useSelector(state => state.user.activeUser);
-	return (
+
+const Layout = ({ children, showLayout = true }) => {
+	return showLayout ? 
 		<Box display='flex'>
-			{activeUser && <Navigation />}
+			<Navigation />
 			<Box sx={{ width: '100%', p: '2rem 4rem 1rem 4rem' }}>
 				<Search />
                 <Header />
             	{children}
 			</Box>
-		</Box>
-	);
+		</Box> : 
+		<>{children}</>
 };
 export default Layout;
