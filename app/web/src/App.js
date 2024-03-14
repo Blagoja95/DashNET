@@ -1,21 +1,25 @@
 import {Box} from '@mui/material';
+
 import {Route, Routes} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+
 import Navigation from './components/layout/navigation/Navigation';
 import Home from './components/pages/home/Home';
 import Search from './components/layout/search/Search'
-import {useSelector} from 'react-redux';
 import Settings from './components/pages/settings/Settings';
 import Login from './components/pages/auth/login/Login';
 import Register from './components/pages/auth/register/Register';
-import HandleSession from './components/pages/auth/HandleSession';
 import Task from './components/pages/task/detailed/Task';
 import CreateTask from './components/pages/task/create/CreateTask';
+
 import useSearch from './hooks/useSearch';
+import useSession from './hooks/useSession';
 
 const App = () =>
 {
 	const activeUser = useSelector(state => state.user.activeUser);
 	useSearch();
+	useSession();
 
 	return (
 		<Box display='flex'>
@@ -24,10 +28,7 @@ const App = () =>
 				width: '100%',
 				p: '2rem 4rem 1rem 4rem'
 			}}>
-
-				<HandleSession/>
 				<Search />
-
 				<Routes>
 					<Route path='/' element={activeUser ? <Home /> : <Login />} />
 					<Route path='/task/*' element={activeUser ? <Task /> : <Login />} />
