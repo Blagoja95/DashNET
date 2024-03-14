@@ -12,12 +12,6 @@ const Home = () =>
 	const controller = HomeController();
 
 	return (
-		<>
-			<Header
-				subtitleTxt={'Track your projects, tasks & team activity here.'}
-				titleTxt={'Manage your projects'}
-			/>
-
 			<Box
 				component={'main'}
 				sx={{
@@ -52,7 +46,6 @@ const Home = () =>
 						  teamId={useSelector(state => state.team.selectedTeam?.id)}/>
 				</Box>
 			</Box>
-		</>
 	)
 };
 

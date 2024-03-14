@@ -3,14 +3,28 @@ import { Box, Typography, Button, Tooltip } from '@mui/material';
 import UserAvatar from '../../ui/avatar/UserAvatar';
 import {useDispatch, useSelector} from 'react-redux';
 import { uiActions } from '../../../store/slices/uiSlice';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import UserMenu from './menu/UserMenu';
+import { useLocation } from 'react-router-dom';
 
-const Header = ({ titleTxt, subtitleTxt, onClick, onBlur }) =>
-{
+const Header = ({ onClick, onBlur }) => {
+	const { pathname } = useLocation();
+	const [title, setTitle] = useState('');
+	const [subtitle, setSubtitle] = useState('');
+
 	const dispatch = useDispatch();
 	const refUser = useRef(null);
 	const open = useSelector(state => state.ui.userMenuOpen);
+
+	useEffect(() => {
+		if (pathname === '/settings') {
+			setTitle('User Settings');
+			setSubtitle('Edit profile settings, upload avatar and more.');
+		} else {
+			setTitle('Manage your projects');
+			setSubtitle('Track your projects, tasks & team activity here.');
+		}
+	}, [pathname]);
 
 	return <Box
 		sx={ {
@@ -31,7 +45,7 @@ const Header = ({ titleTxt, subtitleTxt, onClick, onBlur }) =>
 								fontWeight: 'bold',
 								maxWidth: 900
 							}}>
-					{titleTxt}
+					{title}
 				</Typography>
 			{/*</Tooltip>*/}
 
@@ -74,12 +88,12 @@ const Header = ({ titleTxt, subtitleTxt, onClick, onBlur }) =>
 		<Box>
 			<Typography variant='subtitle1'
 						sx={ {
-							display: `${ ( subtitleTxt && subtitleTxt?.length > 0 ) ? 'block' : 'none' }`,
+							display: `${ ( subtitle && subtitle?.length > 0 ) ? 'block' : 'none' }`,
 							color: 'white.main',
 							marginTop: '1rem'
 						} }>
 
-				{ subtitleTxt?.length > 0 ? subtitleTxt : 'Subtitle' }
+				{ subtitle?.length > 0 ? subtitle : 'Subtitle' }
 			</Typography>
 		</Box>
 	</Box>
