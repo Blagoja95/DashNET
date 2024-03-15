@@ -20,8 +20,8 @@ public class Task
 	private User creatorUser;
 
 	@ManyToOne
-	@JoinColumn(name = "assagne_id")
-	private User assagnedUser;
+	@JoinColumn(name = "assignee_id")
+	private User assignedUser;
 
 	private Long teamId;
 	private Long commentTbId;
@@ -42,14 +42,14 @@ public class Task
 		this.id = id;
 	}
 
-	public User getAssagnedUser()
+	public User getAssignedUser()
 	{
-		return assagnedUser;
+		return assignedUser;
 	}
 
-	public void setAssagnedUser(User assagnedUser)
+	public void setAssignedUser(User assignedUser)
 	{
-		this.assagnedUser = assagnedUser;
+		this.assignedUser = assignedUser;
 	}
 	public User getCreatorUser()
 	{
@@ -146,6 +146,6 @@ public class Task
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(id, creatorUser.getId(), assagnedUser.getId(), teamId, commentTbId, status, createdDate, deadlineDate, title, description);
+		return Objects.hash(id, creatorUser.getId(), assignedUser.getId(), teamId, commentTbId, status, createdDate, deadlineDate, title, description);
 	}
 }
