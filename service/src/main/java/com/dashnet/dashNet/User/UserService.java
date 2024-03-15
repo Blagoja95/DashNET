@@ -1,54 +1,67 @@
 package com.dashnet.dashNet.User;
 
 import com.dashnet.dashNet.Security.JwtUtils;
+import com.dashnet.dashNet.User.Exceptions.UserGenericException;
+import com.dashnet.dashNet.User.Exceptions.UserNotFoundByIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
-public class UserService {
+public class UserService
+{
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder)
+	{
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
-	public ResponseEntity<UserResponse> getUsers() {
+
+	public ResponseEntity<UserResponse> getUsers()
+	{
 		List<User> users = userRepository.findAll();
 
-		if (!users.iterator().hasNext()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("No users found.", 0));
+		if (!users.iterator().hasNext())
+		{
+			throw new UserGenericException("No users found.");
 		}
+
 		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(users));
 	}
 
 
-	public ResponseEntity<UserResponse> getUser(Long userId) {
+	public ResponseEntity<UserResponse> getUser(Long userId)
+	{
 		User userById = userRepository.findUserById(userId);
-		if (userById == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User does not exist.", 0));
-		} else {
+
+		if (userById == null)
+		{
+			throw new UserNotFoundByIdException(userId);
+		}
+		else
+		{
 			return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userById));
 		}
 	}
 
-	public ResponseEntity<UserResponse> getAuthUser(String authHeader) {
+	public ResponseEntity<UserResponse> getAuthUser(String authHeader)
+	{
 		String email = JwtUtils.getEmail(authHeader.substring(7));
 		User userByEmail = userRepository.findUserByEmail(email);
 
-		if (userByEmail != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userByEmail));
+		if (userByEmail == null)
+		{
+			throw new UserGenericException("Token has expired");
 		}
 
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserResponse("Token has expired", 0));
+		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userByEmail));
 	}
 
 	public ResponseEntity<UserResponse> register(User user) {
@@ -99,24 +112,29 @@ public class UserService {
 		return ResponseEntity.status(HttpStatus.OK).body(new UserResponse("Successfully logged in", token, userByEmail, 1));
 	}
 
-	public ResponseEntity<UserResponse> deleteUser(Long userId) {
+	public ResponseEntity<UserResponse> deleteUser(Long userId)
+	{
 		boolean exists = userRepository.existsById(userId);
 
 		if (!exists)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User with that id does not exist", 0));
-
+		{
+			throw new UserNotFoundByIdException(userId);
+		}
 
 		userRepository.deleteById(userId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new UserResponse("User deleted successfully.", 1));
 
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new UserResponse("User deleted successfully.", 1));
 	}
 
-	public ResponseEntity<UserResponse> updateUser(Long userId, User user) {
+	public ResponseEntity<UserResponse> updateUser(Long userId, User user)
+	{
 		User userById = userRepository.findUserById(userId);
 
-		if (userById == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse("User with that id does not exist.", 0));
+		if (userById == null)
+		{
+			throw new UserNotFoundByIdException(userId);
 		}
+
 		user.setId(userId);
 		user.setPassword(userById.getPassword());
 		userRepository.save(user);

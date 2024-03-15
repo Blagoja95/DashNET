@@ -1,5 +1,6 @@
 package com.dashnet.dashNet.Task;
 
+import com.dashnet.dashNet.Common.Service.Service;
 import com.dashnet.dashNet.Task.Exceptions.TaskGenericException;
 import com.dashnet.dashNet.User.User;
 import org.springframework.dao.DataAccessException;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TaskService
+public class TaskService extends Service
 {
 	TaskService() {}
 
@@ -23,7 +24,7 @@ public class TaskService
 		u.setId(Long.valueOf(ReqMap.get("userid")));
 
 		t.setCreatorUser(u);
-		t.setAssagnedUser(u);
+		t.setAssignedUser(u);
 		t.setTeamId(Long.valueOf(ReqMap.getOrDefault("teamid", "0")));
 		t.setDescription(ReqMap.getOrDefault("description", "Empty description"));
 		t.setTitle(ReqMap.getOrDefault("title", "Empty title"));
@@ -79,25 +80,6 @@ public class TaskService
 		res.put("done", done);
 
 		return res;
-	}
-
-	protected ResponseEntity<Map<String, Object>> returnOkResponse(boolean inclMsg, String msg, int status, boolean inclData, Object data)
-	{
-		Map<String, Object> res = new HashMap<String, Object>();
-
-		res.put("status", status);
-
-		if (inclMsg)
-		{
-			res.put("info", msg);
-		}
-
-		if (inclData)
-		{
-			res.put("data", data);
-		}
-
-		return ResponseEntity.ok().body(res);
 	}
 
 	protected ResponseEntity<Map<String, Object>> updateTaskPatch(TaskRepository taskRepository, Task ob, String type)
