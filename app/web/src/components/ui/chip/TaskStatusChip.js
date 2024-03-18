@@ -25,6 +25,7 @@ const TaskStatusChip = ({id, btoken, statusVal}) =>
 			{
 				if (res.status === 200 && res.data.status)
 				{
+					console.log()
 					dispatch(teamActions.setTaskStatus(res.data.data));
 					dispatch(taskActions.updatedLoadedTask(['status', res.data.data.status]));
 				}
