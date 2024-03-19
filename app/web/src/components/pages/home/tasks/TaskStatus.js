@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTaskStatus } from '../../../../store/controllers/taskController';
 
-const TaskStatus = ({ taskId }) => {
+const TaskStatus = ({ statusId, taskId }) => {
 	const dispatch = useDispatch();
 	const btoken = useSelector(state => state.user.btoken);
 
@@ -26,14 +26,13 @@ const TaskStatus = ({ taskId }) => {
 		}
 	]);
 
-	function updateStatus(event) {
-		event.preventDefault();
+	function updateStatus() {
 		dispatch(updateTaskStatus(taskId, btoken));
 	}
 	return (
 		<Chip
-			color={statuses.current[taskId].color}
-			label={statuses.current[taskId].name}
+			color={statuses.current[statusId].color}
+			label={statuses.current[statusId].name}
 			sx={{ width: 100 }}
 			onClick={updateStatus}
 		/>

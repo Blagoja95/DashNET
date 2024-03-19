@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux';
-
 import { Box } from '@mui/material';
 
-import Grid from '../../ui/grid/Grid';
 import TeamCard from './cards/TeamCard';
 import InfoCard from './cards/InfoCard';
+
 import TeamsDropdown from './TeamsDropdown';
 import TasksGrid from './tasks/TasksGrid';
 
@@ -18,10 +16,7 @@ const Home = () => {
 				<TeamCard />
 				<InfoCard />
 			</Box>
-			<Box component='section'>
-				<TasksGrid />
-				<Grid teamId={useSelector((state) => state.team.selectedTeam?.id)} />
-			</Box>
+			<TasksGrid />
 		</Box>
 	);
 };

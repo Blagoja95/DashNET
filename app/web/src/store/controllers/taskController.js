@@ -146,10 +146,10 @@ export const getTasksByTeam = (teamId, tkn) => {
 	}
 }
 
-export const updateTaskStatus = (taskId, tkn) => {
+export const updateTaskStatus = (id, tkn) => {
 	return async dispatch => {
 		axios.patch('http://localhost:8080/tasks/update/status/ow',
-		JSON.stringify({id: taskId}), {
+		{id}, {
 			headers: {
 				'Authorization': `Bearer ${tkn}`,
 				'Content-Type': 'application/json'
