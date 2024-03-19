@@ -1,11 +1,10 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
-import {checkSession} from '../../../store/controllers/userController';
+import { checkSession } from '../store/controllers/userController';
 
-const HandleSession = () =>
-{
+const useSession = () => {
 	const dispatch = useDispatch();
-	const [cookie, setCookie] = useCookies(['JWTTKN']);
+	const [cookie] = useCookies(['JWTTKN']);
 
 	if (!useSelector(state => state.user.sessionLoaded) && cookie?.JWTTKN && cookie.JWTTKN !== '')
 	{
@@ -13,4 +12,4 @@ const HandleSession = () =>
 	}
 };
 
-export default HandleSession;
+export default useSession;

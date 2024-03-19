@@ -2,7 +2,7 @@ import { Alert, Box, Button, Typography } from "@mui/material"
 import AuthContainer from "../AuthContainer"
 import InputGroup from "../../../ui/InputGroup"
 import { Link, useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { registerUser } from "../../../../store/controllers/userController"
 import { uiActions } from "../../../../store/slices/uiSlice"
@@ -29,12 +29,7 @@ const Register = () => {
 		}
 
 		dispatch(registerUser({ fname: fname.value, lname: lname.value, email: email.value, password: password.value},
-			(res) => {
-				console.log(res.data);
-
-				// TODO: can we after registration immediately sign in user? For user to do it manually after registration is tidies work
-			navigate('/auth/login')
-		}));
+		(res) => navigate('/auth/login')));
 	}
 	return (
 		<AuthContainer desc="Please fill in your information to register." type='register'>

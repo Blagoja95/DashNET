@@ -9,7 +9,6 @@ const Settings = () => {
 	const [tabIdx, setTabIdx] = useState(0);
 	return (
 		<Box component='main'>
-			<Header titleTxt="User Settings" subtitleTxt="Edit profile settings, upload avatar and more" />
 			<UserAvatar />
 			<Tabs
 				value={tabIdx}

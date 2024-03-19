@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {taskActions} from '../slices/taskSlice';
+import { teamActions } from '../slices/teamSlice';
 
 export const getTaskDetails = (id, tkn) =>
 {
@@ -116,5 +117,47 @@ export const createTask = (data, tkn, nav) =>
 			 {
 				 console.warn(e);
 			 });
+	}
+}
+
+export const getTaskCountByTeam = (teamId, tkn) => {
+	return async dispatch => {
+		axios.get('http://localhost:8080/tasks/count/' + (teamId ?? -1),
+			{headers: {"Authorization": `Bearer ${tkn}`}})
+			.then(res =>
+			{
+				if (res.status === 200 && res.data.status)
+				{
+					dispatch(teamActions.setTeamStats(res.data.data))
+				}
+			})
+			.catch(e => dispatch(teamActions.setTeamStats(null)));
+	}
+}
+
+export const getTasksByTeam = (teamId, tkn) => {
+	return async dispatch => {
+		axios.get('http://localhost:8080/tasks/team/' + teamId, {
+			 headers: { 'Authorization': `Bearer ${tkn}`}})
+		 .then(res => {
+				dispatch(teamActions.setTeamTasks(res.data.data));
+		 })
+		 .catch(e => dispatch(teamActions.setTeamTasks([])));
+	}
+}
+
+export const updateTaskStatus = (id, tkn) => {
+	return async dispatch => {
+		axios.patch('http://localhost:8080/tasks/update/status/ow',
+		{id}, {
+			headers: {
+				'Authorization': `Bearer ${tkn}`,
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => {
+			dispatch(teamActions.setTaskStatus(res.data.data));
+			dispatch(taskActions.updatedLoadedTask(['status'], res.data.data.status));
+		}).catch(e => console.warn(e));
 	}
 }
