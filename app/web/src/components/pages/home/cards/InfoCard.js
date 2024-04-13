@@ -1,19 +1,24 @@
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material'
+
 import { useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTaskCountByTeam } from '../../../../store/controllers/taskController';
+
 import InfoCardSkeleton from "./InfoCardSkeleton";
 
-const InfoCard = ({ teamId, controller }) =>
-{
-	useEffect(() =>
-	{
-		controller.getCount(teamId);
-	}, [teamId]);
+const InfoCard = () => {
+	const btoken = useSelector(state => state.user.btoken);
+	const dispatch = useDispatch();
+	const teamId = useSelector((state) => state.team.selectedTeam?.id)
+
+	useEffect(() => {
+		dispatch(getTaskCountByTeam(teamId, btoken));
+	}, [teamId, dispatch, btoken]);
 
 	const count = useSelector(state => state.team.teamStats)
 
-	return (count !== null
-			 ? <Card sx={{ minWidth: 275, bgcolor: 'gray.dark', color: 'white.main', flex: 1, borderRadius: 5, p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+	return (count ? 
+	<Card sx={{ minWidth: 275, bgcolor: 'gray.dark', color: 'white.main', flex: 1, borderRadius: 5, p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
 			<CardContent>
 				<Typography variant='h5' sx={{ color: 'white.light' }}>Overall information</Typography>
 				<Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1, my: 3 }}>
@@ -45,6 +50,8 @@ const InfoCard = ({ teamId, controller }) =>
 				</Box>
 			</CardActionArea>
 		</Card>
-		   : <InfoCardSkeleton />);
+		: 
+		<InfoCardSkeleton />
+	);
 }
 export default InfoCard
